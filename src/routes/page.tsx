@@ -1,96 +1,97 @@
-import { Helmet } from '@modern-js/runtime/head'
-import './index.css'
+import miku from '@/assets/sakura-miku.jpg'
+import swpuIcon from '@/assets/swpu-icon.jpg'
+import { LaptopOutlined, NotificationOutlined, UserOutlined } from '@ant-design/icons'
+import { type MenuProps, Space } from 'antd'
+import { Avatar, Button, Image, Layout, Menu, theme } from 'antd'
+import React from 'react'
 
-const Index = () => (
-  <div className="container-box">
-    <Helmet>
-      <link
-        rel="icon"
-        type="image/x-icon"
-        href="https://lf3-static.bytednsdoc.com/obj/eden-cn/uhbfnupenuhf/favicon.ico"
-      />
-    </Helmet>
-    <main>
-      <div className="title">
-        Welcome to
-        <img
-          className="logo"
-          src="https://lf3-static.bytednsdoc.com/obj/eden-cn/zq-uylkvT/ljhwZthlaukjlkulzlp/modern-js-logo.svg"
-          alt="Modern.js Logo"
-        />
-        <p className="name">Modern.js</p>
-      </div>
-      <p className="description">
-        Get started by editing <code className="code">src/routes/page.tsx</code>
-      </p>
-      <div className="grid">
-        <a
-          href="https://modernjs.dev/guides/get-started/introduction.html"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="card"
-        >
-          <h2>
-            Guide
-            <img
-              className="arrow-right"
-              src="https://lf3-static.bytednsdoc.com/obj/eden-cn/zq-uylkvT/ljhwZthlaukjlkulzlp/arrow-right.svg"
-              alt="Guide"
-            />
-          </h2>
-          <p>Follow the guides to use all features of Modern.js.</p>
-        </a>
-        <a
-          href="https://modernjs.dev/tutorials/foundations/introduction.html"
-          target="_blank"
-          className="card"
-          rel="noreferrer"
-        >
-          <h2>
-            Tutorials
-            <img
-              className="arrow-right"
-              src="https://lf3-static.bytednsdoc.com/obj/eden-cn/zq-uylkvT/ljhwZthlaukjlkulzlp/arrow-right.svg"
-              alt="Tutorials"
-            />
-          </h2>
-          <p>Learn to use Modern.js to create your first application.</p>
-        </a>
-        <a
-          href="https://modernjs.dev/configure/app/usage.html"
-          target="_blank"
-          className="card"
-          rel="noreferrer"
-        >
-          <h2>
-            Config
-            <img
-              className="arrow-right"
-              src="https://lf3-static.bytednsdoc.com/obj/eden-cn/zq-uylkvT/ljhwZthlaukjlkulzlp/arrow-right.svg"
-              alt="Config"
-            />
-          </h2>
-          <p>Find all configuration options provided by Modern.js.</p>
-        </a>
-        <a
-          href="https://github.com/web-infra-dev/modern.js"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="card"
-        >
-          <h2>
-            Github
-            <img
-              className="arrow-right"
-              src="https://lf3-static.bytednsdoc.com/obj/eden-cn/zq-uylkvT/ljhwZthlaukjlkulzlp/arrow-right.svg"
-              alt="Github"
-            />
-          </h2>
-          <p>View the source code of Github, feel free to contribute.</p>
-        </a>
-      </div>
-    </main>
-  </div>
+const { Header, Content, Sider, Footer } = Layout
+
+const items2: MenuProps['items'] = [UserOutlined, LaptopOutlined, NotificationOutlined].map(
+  (icon, index) => {
+    const key = String(index + 1)
+
+    return {
+      key: `sub${key}`,
+      icon: React.createElement(icon),
+      label: `subnav ${key}`,
+
+      children: new Array(4).fill(null).map((_, j) => {
+        const subKey = index * 4 + j + 1
+        return {
+          key: subKey,
+          label: `option${subKey}`
+        }
+      })
+    }
+  }
 )
 
-export default Index
+const App: React.FC = () => {
+  const {
+    token: { colorBgContainer, borderRadiusLG, colorFill }
+  } = theme.useToken()
+
+  return (
+    <Layout style={{ height: '100vh' }}>
+      <Header
+        style={{
+          display: 'flex',
+          justifyContent: 'space-between',
+          alignItems: 'center',
+          height: 64,
+          padding: '12px 32px',
+          lineHeight: 'normal',
+          background: colorBgContainer
+        }}
+      >
+        <Space size="small">
+          <Image src={swpuIcon} preview={false} width={40} height={40} />
+          <div style={{ fontSize: 16, fontWeight: 700, lineHeight: 1.5 }}>西南石油带砖</div>
+        </Space>
+        <Space split={<div style={{ color: colorFill }}>|</div>}>
+          <Space size={4} style={{ cursor: 'default' }}>
+            <Avatar size={40} src={miku} />
+            <div style={{ fontSize: 16, lineHeight: 1.5 }}>nameless</div>
+          </Space>
+          <Button color="default" variant="link" size="small">
+            个人中心
+          </Button>
+          <Button color="default" variant="link" size="small">
+            消息通知
+          </Button>
+          <Button color="default" variant="link" size="small">
+            退出
+          </Button>
+        </Space>
+      </Header>
+      <Layout>
+        <Sider width={200} style={{ background: colorBgContainer }}>
+          <Menu
+            mode="inline"
+            defaultSelectedKeys={['1']}
+            defaultOpenKeys={['sub1']}
+            style={{ height: '100%', borderRight: 0 }}
+            items={items2}
+          />
+        </Sider>
+        <Layout style={{ padding: 24 }}>
+          <Content
+            style={{
+              padding: 24,
+              margin: 0,
+              minHeight: 280,
+              background: colorBgContainer,
+              borderRadius: borderRadiusLG
+            }}
+          >
+            Content
+          </Content>
+        </Layout>
+      </Layout>
+      <Footer style={{ height: 64, background: colorBgContainer }}>footer</Footer>
+    </Layout>
+  )
+}
+
+export default App
