@@ -1,6 +1,7 @@
 {
   "name": "swpu-hire-fronted",
   "version": "0.1.0",
+  "private": true,
   "scripts": {
     "reset": "npx rimraf node_modules ./**/node_modules",
     "dev": "modern dev",
@@ -9,6 +10,7 @@
     "serve": "modern serve",
     "new": "modern new",
     "lint": "biome check",
+    "lint:fix": "biome check --write",
     "prepare": "simple-git-hooks",
     "upgrade": "modern upgrade"
   },

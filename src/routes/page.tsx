@@ -1,5 +1,5 @@
-import { Helmet } from '@modern-js/runtime/head';
-import './index.css';
+import { Helmet } from '@modern-js/runtime/head'
+import './index.css'
 
 const Index = () => (
   <div className="container-box">
@@ -91,6 +91,6 @@ const Index = () => (
       </div>
     </main>
   </div>
-);
+)
 
-export default Index;
+export default Index

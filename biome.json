@@ -8,14 +8,17 @@
   },
   "formatter": {
     "enabled": true,
+    "lineEnding": "lf",
     "indentStyle": "space"
   },
   "javascript": {
     "formatter": {
       "quoteStyle": "single",
-      "arrowParentheses": "asNeeded",
+      "semicolons": "asNeeded",
+      "trailingCommas": "none",
+      "arrowParentheses": "always",
       "jsxQuoteStyle": "double",
-      "lineWidth": 80
+      "lineWidth": 100
     }
   },
   "linter": {

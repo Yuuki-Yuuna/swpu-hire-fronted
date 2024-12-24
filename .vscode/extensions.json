@@ -1,14 +1,14 @@
 {
   "recommendations": [
     "styled-components.vscode-styled-components",
-    "EditorConfig.editorconfig",
-    "streetsidesoftware.code-spell-checker",
-    "codezombiech.gitignore",
-    "aaron-bond.better-comments",
-    "jasonnutter.search-node-modules",
+    "biomejs.biome",
     "jock.svg",
-    "mikestead.dotenv",
-    "vscode-icons-team.vscode-icons",
-    "biomejs.biome"
+    // "EditorConfig.editorconfig",
+    // "streetsidesoftware.code-spell-checker",
+    // "codezombiech.gitignore",
+    // "aaron-bond.better-comments",
+    // "jasonnutter.search-node-modules",
+    // "mikestead.dotenv",
+    // "vscode-icons-team.vscode-icons",
   ]
 }
