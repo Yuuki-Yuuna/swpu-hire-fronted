@@ -1,8 +1,7 @@
 import { Outlet } from '@modern-js/runtime/router'
-import './index.css'
 
-const Layout = () => {
+const LoginLayout = () => {
   return <Outlet />
 }
 
-export default Layout
+export default LoginLayout
