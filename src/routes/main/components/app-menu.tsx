@@ -1,6 +1,7 @@
-import { useNavigate } from '@modern-js/runtime/router'
+import { useLocation, useNavigate } from '@modern-js/runtime/router'
 import { Layout, Menu, theme } from 'antd'
 import type { MenuProps } from 'antd'
+import { useEffect, useState } from 'react'
 
 const { Sider } = Layout
 
@@ -37,6 +38,15 @@ export const AppMenu = () => {
   } = theme.useToken()
 
   const navigate = useNavigate()
+  const location = useLocation()
+
+  const [selectMenuKeys, setSelectMenuKeys] = useState<string[]>([])
+
+  useEffect(() => {
+    const pathNameArray = location.pathname.split('/')
+    const selectKey = pathNameArray.at(-1)
+    selectKey && setSelectMenuKeys([selectKey])
+  }, [location])
 
   const onSelect: MenuProps['onSelect'] = (selectInfo) => {
     const [selectedKey] = selectInfo.selectedKeys
@@ -45,7 +55,13 @@ export const AppMenu = () => {
 
   return (
     <Sider width={200} style={{ background: colorBgContainer }}>
-      <Menu mode="inline" items={menuItems} defaultOpenKeys={defaultOpenKeys} onSelect={onSelect} />
+      <Menu
+        mode="inline"
+        items={menuItems}
+        selectedKeys={selectMenuKeys}
+        defaultOpenKeys={defaultOpenKeys}
+        onSelect={onSelect}
+      />
     </Sider>
   )
 }
