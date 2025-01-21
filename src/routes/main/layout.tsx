@@ -11,7 +11,7 @@ const MainLayout = () => {
   } = theme.useToken()
 
   return (
-    <Layout style={{ height: '100vh' }}>
+    <Layout style={{ minHeight: '100vh' }}>
       <AppHeader />
       <Layout>
         <AppMenu />

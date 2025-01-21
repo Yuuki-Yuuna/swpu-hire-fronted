@@ -1,4 +1,4 @@
-import { Flex, Space, Tag, theme } from 'antd'
+import { Avatar, Flex, Space, Tag, theme } from 'antd'
 import { createStyles } from 'antd-style'
 
 interface JobData {
@@ -12,6 +12,12 @@ interface JobData {
   salaryDesc: string // 薪资描述
   showSkills: string[] // 标签
   companyId: string // 企业id
+  companyName: string // 企业名称
+  companyLogo: string // 企业logo
+  compoanySize: number // 企业规模(value)
+  companySizeName: string // 企业规模
+  companyType: number // 企业类型(value)
+  companyTypeName: string // 企业类型
 }
 
 export interface JobListProps {
@@ -22,7 +28,7 @@ export const JobList: React.FC<JobListProps> = (props) => {
   const { data } = props
 
   return (
-    <Flex vertical>
+    <Flex vertical gap="middle">
       {data.map((item) => (
         <JobListItem key={item.jobId} data={item} />
       ))}
@@ -38,7 +44,7 @@ const JobListItem: React.FC<JobListItemProps> = (props) => {
   const { data } = props
 
   const {
-    token: { colorError, colorTextSecondary }
+    token: { colorError, colorTextSecondary, colorFill }
   } = theme.useToken()
   const { styles } = useStyles()
 
@@ -57,6 +63,16 @@ const JobListItem: React.FC<JobListItemProps> = (props) => {
           ))}
         </Flex>
       </Flex>
+      <Flex gap="small" style={{ width: 240 }}>
+        <Avatar src={data.companyLogo} size={56} />
+        <Space direction="vertical">
+          <div style={{ fontSize: 16, lineHeight: 1.5 }}>{data.companyName}</div>
+          <Space split={<div style={{ color: colorFill }}>|</div>}>
+            <div className={styles.componayDesc}>{data.companyTypeName}</div>
+            <div className={styles.componayDesc}>{data.companySizeName}</div>
+          </Space>
+        </Space>
+      </Flex>
     </div>
   )
 }
@@ -64,10 +80,16 @@ const JobListItem: React.FC<JobListItemProps> = (props) => {
 const useStyles = createStyles(({ token, css }) => ({
   jobListItem: css`
     display: flex;
+    justify-content: space-between;
     align-items: center;
     padding: 20px 24px;
     border-radius: ${token.borderRadiusLG}px;
     background: ${token.colorBgContainer};
     cursor: pointer;
+  `,
+  componayDesc: css`
+    font-size: 12px;
+    line-height: 1.5;
+    color: ${token.colorTextSecondary};
   `
 }))
