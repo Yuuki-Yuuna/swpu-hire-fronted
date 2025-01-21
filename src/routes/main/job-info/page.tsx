@@ -3,8 +3,8 @@ import type { TabsProps } from 'antd'
 import { Flex, Tabs } from 'antd'
 import { createStyles } from 'antd-style'
 import { useState } from 'react'
-import { JobList, type JobListProps } from './components/job-list'
-import { JobSearch, type JobSearchProps } from './components/job-search'
+import { JobList, type JobListProps } from './job-list'
+import { JobSearch, type JobSearchProps } from './job-search'
 
 const mockData: JobListProps['data'] = [
   {

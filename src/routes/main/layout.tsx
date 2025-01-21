@@ -1,7 +1,7 @@
 import { Outlet } from '@modern-js/runtime/router'
 import { Flex, Layout, theme } from 'antd'
-import { AppHeader } from './components/app-header'
-import { AppMenu } from './components/app-menu'
+import { AppHeader } from './app-header'
+import { AppMenu } from './app-menu'
 
 const { Content, Footer } = Layout
 
