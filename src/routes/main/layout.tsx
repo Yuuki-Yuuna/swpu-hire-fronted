@@ -1,7 +1,7 @@
 import { Outlet } from '@modern-js/runtime/router'
 import { Flex, Layout, theme } from 'antd'
-import { AppHeader } from './app-header'
-import { AppMenu } from './app-menu'
+import { MainHeader } from './main-header'
+import { MainMenu } from './main-menu'
 
 const { Content, Footer } = Layout
 
@@ -12,9 +12,9 @@ const MainLayout = () => {
 
   return (
     <Layout style={{ minHeight: '100vh' }}>
-      <AppHeader />
+      <MainHeader />
       <Layout>
-        <AppMenu />
+        <MainMenu />
         <Content style={{ padding: 24 }}>
           <Outlet />
         </Content>

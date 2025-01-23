@@ -32,7 +32,7 @@ const menuItems: MenuProps['items'] = [
 
 const defaultOpenKeys = menuItems.map((item) => item?.key as string)
 
-export const AppMenu = () => {
+export const MainMenu = () => {
   const {
     token: { colorBgContainer }
   } = theme.useToken()

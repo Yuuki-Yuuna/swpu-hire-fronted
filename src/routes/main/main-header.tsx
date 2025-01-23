@@ -4,7 +4,7 @@ import { Avatar, Button, Image, Layout, Space, theme } from 'antd'
 
 const { Header } = Layout
 
-export const AppHeader: React.FC = () => {
+export const MainHeader: React.FC = () => {
   const {
     token: { colorBgContainer, colorFill }
   } = theme.useToken()
