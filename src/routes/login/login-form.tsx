@@ -1,5 +1,8 @@
+import { userApi } from '@/api/user'
+import { setToken } from '@/utils/token'
 import { LockOutlined, UserOutlined } from '@ant-design/icons'
-import { Button, Checkbox, Flex, Form, Input, theme } from 'antd'
+import { useNavigate } from '@modern-js/runtime/router'
+import { Button, Checkbox, Flex, Form, Input, message } from 'antd'
 import { createStyles } from 'antd-style'
 
 interface LoginFormValue {
@@ -8,18 +11,43 @@ interface LoginFormValue {
   remember?: boolean
 }
 
+const REMEMBER_USERNAME_KEY = 'remember_username'
+
 export const LoginForm = () => {
+  const navigate = useNavigate()
+
   const { styles } = useStyles()
 
-  const onFinish = (formValue: LoginFormValue) => {
-    console.log('Received values of form: ', formValue)
-    // if (!formValue.remember) {
-    //   localStorage.removeItem('remember_username')
-    // }
+  const onFinish = async (formValue: LoginFormValue) => {
+    const { username, password, remember } = formValue
+    const res = await userApi.login({ username, password })
+    if (!res.success) {
+      message.error(res.message)
+      return
+    }
+
+    if (!remember) {
+      localStorage.removeItem(REMEMBER_USERNAME_KEY)
+    } else {
+      localStorage.setItem(REMEMBER_USERNAME_KEY, username)
+    }
+
+    message.success('登录成功')
+    const { token } = res.data
+    setToken(token)
+    navigate('/main')
   }
 
   return (
-    <Form name="login" className={styles.form} onFinish={onFinish}>
+    <Form
+      name="login"
+      className={styles.form}
+      onFinish={onFinish}
+      initialValues={{
+        username: localStorage.getItem(REMEMBER_USERNAME_KEY) || '',
+        remember: !!localStorage.getItem(REMEMBER_USERNAME_KEY)
+      }}
+    >
       <div className={styles.title}>用户登录</div>
       <Form.Item name="username" rules={[{ required: true, message: '请输入用户名' }]}>
         <Input prefix={<UserOutlined />} placeholder="用户名" />

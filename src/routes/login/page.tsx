@@ -1,5 +1,5 @@
 import swpuBrand from '@/assets/swou-brand.png'
-import { Flex, Image, Layout, theme } from 'antd'
+import { Image, Layout, theme } from 'antd'
 import { LoginForm } from './login-form'
 
 const { Header } = Layout
