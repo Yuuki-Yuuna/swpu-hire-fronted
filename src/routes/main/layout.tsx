@@ -1,5 +1,6 @@
+import headerBg from '@/assets/header-bg.png'
 import { Outlet } from '@modern-js/runtime/router'
-import { Flex, Layout, theme } from 'antd'
+import { Flex, Image, Layout, theme } from 'antd'
 import { MainHeader } from './main-header'
 import { MainMenu } from './main-menu'
 
@@ -16,6 +17,7 @@ const MainLayout = () => {
       <Layout>
         <MainMenu />
         <Content style={{ padding: 24 }}>
+          <Image src={headerBg} preview={false} style={{ marginBottom: 24 }} width={'100%'} />
           <Outlet />
         </Content>
       </Layout>
