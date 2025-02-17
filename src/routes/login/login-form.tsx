@@ -1,9 +1,11 @@
 import { userApi } from '@/api/user'
+import { cryptoKey } from '@/utils/sercet-key'
 import { setToken } from '@/utils/token'
 import { LockOutlined, UserOutlined } from '@ant-design/icons'
 import { useNavigate } from '@modern-js/runtime/router'
 import { Button, Checkbox, Flex, Form, Input, message } from 'antd'
 import { createStyles } from 'antd-style'
+import { AES } from 'crypto-js'
 
 interface LoginFormValue {
   username: string
@@ -20,7 +22,9 @@ export const LoginForm = () => {
 
   const onFinish = async (formValue: LoginFormValue) => {
     const { username, password, remember } = formValue
-    const res = await userApi.login({ username, password })
+    const encUsername = AES.encrypt(username, cryptoKey).toString()
+    const encPassword = AES.encrypt(password, cryptoKey).toString()
+    const res = await userApi.login({ username: encUsername, password: encPassword })
     if (!res.success) {
       message.error(res.message)
       return
