@@ -7,5 +7,8 @@ export const userApi = {
   },
   userInfo() {
     return request.get<UserInfo>('/user/info')
+  },
+  changePassword(params: { oldPassword: string; newPassword: string; confirmPassword: string }) {
+    return request.post<null>('/user/change-password', params)
   }
 }

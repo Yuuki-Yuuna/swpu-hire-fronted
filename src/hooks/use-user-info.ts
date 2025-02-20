@@ -2,7 +2,8 @@ import { userApi } from '@/api/user'
 import { getToken, removeToken } from '@/utils/token'
 import { useNavigate } from '@modern-js/runtime/router'
 import { message } from 'antd'
-import { atom, useAtom } from 'jotai'
+import { useAtom } from 'jotai'
+import { atomWithReset, useResetAtom } from 'jotai/utils'
 import { useEffect } from 'react'
 
 export interface UserInfo {
@@ -11,7 +12,7 @@ export interface UserInfo {
   graduationYear: number
 }
 
-const userAtom = atom<UserInfo | null>(null)
+const userAtom = atomWithReset<UserInfo | null>(null)
 
 const getUserInfo = async (): Promise<{
   userInfo: UserInfo | null
@@ -51,4 +52,8 @@ export const useUserInfo = () => {
   }, [userInfo, navigate, setUserInfo])
 
   return { userInfo, refresh: () => getUserInfo() }
+}
+
+export const useResetUserInfo = () => {
+  return useResetAtom(userAtom)
 }
