@@ -16,16 +16,18 @@ const MainLayout = () => {
       <MainHeader />
       <Layout>
         <MainMenu />
-        <Content style={{ padding: 24 }}>
-          <Image src={headerBg} preview={false} style={{ marginBottom: 24 }} width={'100%'} />
-          <Outlet />
-        </Content>
+        <Layout>
+          <Content style={{ padding: 24, minHeight: 'calc(100vh - 64px)' }}>
+            <Image src={headerBg} preview={false} style={{ marginBottom: 24 }} width={'100%'} />
+            <Outlet />
+          </Content>
+          <Footer style={{ height: 64, background: colorBgContainer }}>
+            <Flex align="center" justify="center">
+              Swpu Hire ©2025 created by P. J. Y
+            </Flex>
+          </Footer>
+        </Layout>
       </Layout>
-      <Footer style={{ height: 64, background: colorBgContainer }}>
-        <Flex align="center" justify="center">
-          Swpu Hire ©2025 created by P. J. Y
-        </Flex>
-      </Footer>
     </Layout>
   )
 }

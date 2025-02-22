@@ -54,7 +54,15 @@ export const MainMenu = () => {
   }
 
   return (
-    <Sider width={200} style={{ background: colorBgContainer }}>
+    <Sider
+      width={200}
+      style={{
+        background: colorBgContainer,
+        height: 'calc(100vh - 64px)',
+        position: 'sticky',
+        top: 64
+      }}
+    >
       <Menu
         mode="inline"
         items={menuItems}
