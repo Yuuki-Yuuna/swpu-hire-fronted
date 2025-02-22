@@ -1,13 +1,27 @@
-import miku from '@/assets/sakura-miku.jpg'
+import { userApi } from '@/api/user'
 import swpuIcon from '@/assets/swpu-icon.jpg'
+import { useResetUserInfo, useUserInfo } from '@/hooks/use-user-info'
+import { removeToken } from '@/utils/token'
+import { useNavigate } from '@modern-js/runtime/router'
 import { Avatar, Button, Image, Layout, Space, theme } from 'antd'
 
 const { Header } = Layout
 
 export const MainHeader: React.FC = () => {
+  const navigate = useNavigate()
+  const { userInfo } = useUserInfo()
+  const resetUserInfo = useResetUserInfo()
+
   const {
     token: { colorBgContainer, colorFill }
   } = theme.useToken()
+
+  const quit = () => {
+    userApi.quit()
+    navigate('/login')
+    resetUserInfo()
+    removeToken()
+  }
 
   return (
     <Header
@@ -27,8 +41,8 @@ export const MainHeader: React.FC = () => {
       </Space>
       <Space split={<div style={{ color: colorFill }}>|</div>}>
         <Space size={4} style={{ cursor: 'default' }}>
-          <Avatar size={40} src={miku} />
-          <div style={{ fontSize: 16, lineHeight: 1.5 }}>nameless</div>
+          <Avatar size={40} src={userInfo?.avatar || swpuIcon} />
+          <div style={{ fontSize: 16, lineHeight: 1.5 }}>{userInfo?.studentName}</div>
         </Space>
         <Button color="default" variant="link" size="small">
           个人中心
@@ -36,7 +50,7 @@ export const MainHeader: React.FC = () => {
         <Button color="default" variant="link" size="small">
           消息通知
         </Button>
-        <Button color="default" variant="link" size="small">
+        <Button color="default" variant="link" size="small" onClick={quit}>
           退出
         </Button>
       </Space>

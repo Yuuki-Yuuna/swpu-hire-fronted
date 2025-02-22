@@ -7,7 +7,7 @@ import { UserOptionCard } from './user-option-card'
 const UserCenter = () => {
   const { styles } = useStyles()
 
-  const { userInfo } = useUserInfo()
+  const { userInfo, refresh } = useUserInfo()
 
   const {
     token: { colorBgContainer, colorFillTertiary }
@@ -16,7 +16,7 @@ const UserCenter = () => {
   return (
     <Flex vertical className={styles.container} style={{ background: colorBgContainer }}>
       <Flex vertical gap={16} className={styles.userCard} style={{ background: colorFillTertiary }}>
-        <UserInfoCard userInfo={userInfo} />
+        <UserInfoCard userInfo={userInfo} refreshUserInfo={refresh} />
         <UserOptionCard userInfo={userInfo} />
       </Flex>
     </Flex>

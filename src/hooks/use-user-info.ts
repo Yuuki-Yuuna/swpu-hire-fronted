@@ -4,12 +4,13 @@ import { useNavigate } from '@modern-js/runtime/router'
 import { message } from 'antd'
 import { useAtom } from 'jotai'
 import { atomWithReset, useResetAtom } from 'jotai/utils'
-import { useEffect } from 'react'
+import { useCallback, useEffect } from 'react'
 
 export interface UserInfo {
   username: string
   studentName: string
   graduationYear: number
+  avatar?: string
 }
 
 const userAtom = atomWithReset<UserInfo | null>(null)
@@ -36,22 +37,25 @@ export const useUserInfo = () => {
   const navigate = useNavigate()
   const [userInfo, setUserInfo] = useAtom(userAtom)
 
+  const refreshUserInfo = useCallback(async () => {
+    const result = await getUserInfo()
+    if (!result.userInfo) {
+      result.message && message.error(result.message)
+      navigate('/login')
+    } else {
+      setUserInfo(result.userInfo)
+    }
+  }, [navigate, setUserInfo])
+
   useEffect(() => {
     if (userInfo) {
       return
     }
 
-    getUserInfo().then((result) => {
-      if (!result.userInfo) {
-        result.message && message.error(result.message)
-        navigate('/login')
-      } else {
-        setUserInfo(result.userInfo)
-      }
-    })
-  }, [userInfo, navigate, setUserInfo])
+    refreshUserInfo()
+  }, [userInfo, refreshUserInfo])
 
-  return { userInfo, refresh: () => getUserInfo() }
+  return { userInfo, refresh: refreshUserInfo }
 }
 
 export const useResetUserInfo = () => {
