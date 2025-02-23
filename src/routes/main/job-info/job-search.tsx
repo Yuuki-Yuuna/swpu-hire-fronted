@@ -82,8 +82,8 @@ const companySizeOptions: SelectProps['options'] = [
   { label: '20-99人', value: 1 },
   { label: '100-499人', value: 2 },
   { label: '500-999人', value: 3 },
-  { label: '500-9999人', value: 4 },
-  { label: '1000人以上', value: 5 }
+  { label: '1000-9999人', value: 4 },
+  { label: '10000人以上', value: 5 }
 ]
 
 const salaryRequirementOptions: SelectProps['options'] = [
