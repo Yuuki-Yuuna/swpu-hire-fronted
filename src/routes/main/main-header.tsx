@@ -40,12 +40,12 @@ export const MainHeader: React.FC = () => {
     >
       <Space size="small" style={{ cursor: 'default' }}>
         <Image src={swpuIcon} preview={false} width={40} height={40} />
-        <div style={{ fontSize: 16, fontWeight: 700, lineHeight: 1.5 }}>西南石油带砖</div>
+        <div style={{ fontSize: 16, fontWeight: 700 }}>西南石油带砖</div>
       </Space>
       <Space split={<div style={{ color: colorFill }}>|</div>}>
         <Space size={4} style={{ cursor: 'default' }}>
           <Avatar size={40} src={userInfo?.avatar || swpuIcon} />
-          <div style={{ fontSize: 16, lineHeight: 1.5 }}>{userInfo?.studentName}</div>
+          <div style={{ fontSize: 16 }}>{userInfo?.studentName}</div>
         </Space>
         <Button color="default" variant="link" size="small">
           个人中心
