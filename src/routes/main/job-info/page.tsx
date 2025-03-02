@@ -1,7 +1,7 @@
 import { jobApi } from '@/api/job'
 import { useSearchParams } from '@modern-js/runtime/router'
 import { usePagination } from 'ahooks'
-import type { TabsProps } from 'antd'
+import { Spin, type TabsProps } from 'antd'
 import { Flex, Tabs } from 'antd'
 import { createStyles } from 'antd-style'
 import { useMemo, useState } from 'react'
@@ -31,7 +31,11 @@ const JobInfo = () => {
     setJobSearchData(data)
   }
 
-  const { data: jobListData, pagination: listPagination } = usePagination(
+  const {
+    loading: jobListLoading,
+    data: jobListData,
+    pagination: listPagination
+  } = usePagination(
     async ({ current, pageSize }) => {
       const result = await jobApi.list({ ...jobSearchData, page: current, limit: pageSize })
       return result.data
@@ -61,10 +65,12 @@ const JobInfo = () => {
   )
 
   return (
-    <Flex vertical>
-      <JobSearch data={jobSearchData} onChange={onJobSearchDataChange} />
-      <Tabs items={tabItems} defaultActiveKey="all" className={styles.tabs} size="small" />
-    </Flex>
+    <Spin spinning={jobListLoading}>
+      <Flex vertical>
+        <JobSearch data={jobSearchData} onChange={onJobSearchDataChange} />
+        <Tabs items={tabItems} defaultActiveKey="all" className={styles.tabs} size="small" />
+      </Flex>
+    </Spin>
   )
 }
 

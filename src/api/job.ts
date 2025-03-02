@@ -11,5 +11,8 @@ export const jobApi = {
   },
   detail(params: { id: string }) {
     return request.get<JobDetailData>('/job/detail', { params })
+  },
+  apply(params: { jobId: string }) {
+    return request.post<null>('/interview/create-record', params)
   }
 }

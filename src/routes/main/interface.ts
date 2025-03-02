@@ -21,4 +21,5 @@ export interface JobData {
 
 export interface JobDetailData extends JobData {
   description: string // 岗位描述
+  isApply: boolean
 }

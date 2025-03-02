@@ -1,7 +1,9 @@
+import { jobApi } from '@/api/job'
 import swpuIcon from '@/assets/swpu-icon.jpg'
 import type { JobDetailData } from '@/routes/main/interface'
-import { Avatar, Button, Divider, Flex, Space, Tag, theme } from 'antd'
+import { Avatar, Button, Divider, Flex, Space, Tag, message, theme } from 'antd'
 import { createStyles } from 'antd-style'
+import { useState } from 'react'
 
 export interface JobCardProps {
   data?: JobDetailData
@@ -9,13 +11,31 @@ export interface JobCardProps {
 
 export const JobCard: React.FC<JobCardProps> = (props) => {
   const { data } = props
-  const { jobName, salaryDesc, positionName, locationName, degreeName, showSkills } = data ?? {}
+  const { _id, jobName, salaryDesc, positionName, locationName, degreeName, showSkills, isApply } =
+    data ?? {}
 
   const { styles } = useStyles()
 
   const {
     token: { colorError, colorFill }
   } = theme.useToken()
+
+  const [applyLoading, setApplyLoading] = useState(false)
+
+  const applyJob = async () => {
+    if (!_id) {
+      return
+    }
+
+    setApplyLoading(true)
+    const res = await jobApi.apply({ jobId: _id })
+    if (!res.success) {
+      message.error(res.message)
+    } else {
+      message.success('申请成功')
+    }
+    setApplyLoading(false)
+  }
 
   return (
     <Flex vertical gap={12} flex={4}>
@@ -34,7 +54,9 @@ export const JobCard: React.FC<JobCardProps> = (props) => {
           </Flex>
           <Space>
             <Button>收藏</Button>
-            <Button type="primary">申请</Button>
+            <Button type="primary" disabled={isApply} loading={applyLoading} onClick={applyJob}>
+              申请
+            </Button>
           </Space>
         </Flex>
         <Divider />
