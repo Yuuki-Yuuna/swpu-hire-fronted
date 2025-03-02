@@ -2,9 +2,9 @@ import adcode from '@/assets/adcode.json'
 import { Cascader, Flex, Input, Select, Space, theme } from 'antd'
 import type { CascaderProps, SelectProps } from 'antd'
 
-interface JobSearchData {
+export interface JobSearchData {
   input: string
-  city?: string
+  city?: string // adcode
   companySize?: number
   salaryRequirement?: number
   enterpriseNature?: number
@@ -18,7 +18,7 @@ export interface JobSearchProps {
 export const JobSearch: React.FC<JobSearchProps> = (props) => {
   const { data, onChange } = props
   const { companySize, salaryRequirement, enterpriseNature } = data
-  const cityValue = data.city ? [data.city] : [] // 只用于显示的值
+  const cityValue = data.city ? [data.city.slice(0, 6), data.city.slice(6)] : []
 
   const {
     token: { colorBgContainer, borderRadiusLG }
@@ -38,7 +38,8 @@ export const JobSearch: React.FC<JobSearchProps> = (props) => {
       <Space>
         <Cascader
           value={cityValue}
-          onChange={(value) => onChange({ ...data, city: (value as string[])?.at(-1) })}
+          displayRender={(labels) => labels.at(-1)}
+          onChange={(value) => onChange({ ...data, city: (value as string[])?.join('') })}
           options={cityOptions}
           placeholder="全部城市"
         />
@@ -73,8 +74,8 @@ export const JobSearch: React.FC<JobSearchProps> = (props) => {
 
 const cityOptions: CascaderProps['options'] = adcode.map((province) => ({
   label: province.name,
-  value: province.name,
-  children: province.citys.map((city) => ({ label: city.name, value: city.name }))
+  value: province.adcode,
+  children: province.citys.map((city) => ({ label: city.name, value: city.adcode }))
 }))
 
 const companySizeOptions: SelectProps['options'] = [
