@@ -28,5 +28,8 @@ export const useStyles = createStyles(({ token, css }) => ({
   `,
   itemTitle: css`
     color: ${token.colorTextTertiary}
+  `,
+  block: css`
+    margin-bottom: 12px;
   `
 }))

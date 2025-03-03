@@ -1,9 +1,8 @@
 import { DeleteOutlined, PlusOutlined } from '@ant-design/icons'
-import { Button, Col, DatePicker, Divider, Flex, Form, Input, Row, Select, Space } from 'antd'
-import type { SelectProps } from 'antd'
+import { Button, Col, DatePicker, Divider, Flex, Form, Input, Row, Space } from 'antd'
 import { useStyles } from './style'
 
-export const EducationExpEditable: React.FC = () => {
+export const ProjectExpEditable: React.FC = () => {
   const { styles } = useStyles()
 
   return (
@@ -11,30 +10,26 @@ export const EducationExpEditable: React.FC = () => {
       <Row>
         <Col span={10}>
           <Flex vertical gap={16}>
-            <div className={styles.title}>教育经历</div>
-            <div className={styles.desc}>请填写教育经历</div>
+            <div className={styles.title}>项目经历</div>
+            <div className={styles.desc}>请填写项目经历</div>
           </Flex>
         </Col>
         <Col span={12}>
-          <Form.List name="education">
+          <Form.List name="project">
             {(fields, { add, remove }) => (
               <>
                 {fields.map((field, index) => (
                   <div key={field.key}>
                     <Flex vertical gap={16}>
                       <Form.Item
-                        name={[field.name, 'school']}
-                        label="学校"
-                        rules={[{ required: true, message: '请输入学校' }]}
+                        name={[field.name, 'name']}
+                        label="项目名称"
+                        rules={[{ required: true, message: '请输入项目名称' }]}
                       >
-                        <Input placeholder="请输入学校" />
+                        <Input placeholder="请输入项目名称" />
                       </Form.Item>
-                      <Form.Item
-                        name={[field.name, 'degree']}
-                        label="学历"
-                        rules={[{ required: true, message: '请输入学历' }]}
-                      >
-                        <Select placeholder="请输入学历" options={degreeOptions} allowClear />
+                      <Form.Item name={[field.name, 'role']} label="项目角色">
+                        <Input placeholder="请输入项目角色" />
                       </Form.Item>
                       <Form.Item
                         name={[field.name, 'timeRange']}
@@ -43,8 +38,15 @@ export const EducationExpEditable: React.FC = () => {
                       >
                         <DatePicker.RangePicker picker="month" />
                       </Form.Item>
-                      <Form.Item name={[field.name, 'major']} label="专业">
-                        <Input placeholder="请输入专业" />
+                      <Form.Item name={[field.name, 'link']} label="项目链接">
+                        <Input placeholder="请输入项目链接" />
+                      </Form.Item>
+                      <Form.Item
+                        name={[field.name, 'desc']}
+                        label="描述"
+                        rules={[{ required: true, message: '请输入项目描述' }]}
+                      >
+                        <Input.TextArea placeholder="请输入描述" />
                       </Form.Item>
                     </Flex>
                     <Flex vertical align="flex-end">
@@ -71,24 +73,24 @@ export const EducationExpEditable: React.FC = () => {
   )
 }
 
-export const EducationExpReadonly: React.FC = () => {
+export const ProjectExpReadonly: React.FC = () => {
   const { styles } = useStyles()
 
   return (
     <>
-      <div className={styles.title}>教育经历</div>
+      <div className={styles.title}>项目经历</div>
       <Flex vertical gap={16} className={styles.block}>
         <Row gutter={16}>
           <Col span={8}>
             <Space direction="vertical">
-              <div className={styles.itemTitle}>学校</div>
-              <div>西南石油大砖</div>
+              <div className={styles.itemTitle}>项目名称</div>
+              <div>tx文档</div>
             </Space>
           </Col>
           <Col span={8}>
             <Space direction="vertical">
-              <div className={styles.itemTitle}>专业</div>
-              <div>软件工程</div>
+              <div className={styles.itemTitle}>项目角色</div>
+              <div>前端开发</div>
             </Space>
           </Col>
         </Row>
@@ -101,8 +103,16 @@ export const EducationExpReadonly: React.FC = () => {
           </Col>
           <Col span={8}>
             <Space direction="vertical">
-              <div className={styles.itemTitle}>学历</div>
-              <div>本科</div>
+              <div className={styles.itemTitle}>项目链接</div>
+              <div>http</div>
+            </Space>
+          </Col>
+        </Row>
+        <Row>
+          <Col span={16}>
+            <Space direction="vertical">
+              <div className={styles.itemTitle}>描述</div>
+              <div>爱国哈大概爱德华感觉</div>
             </Space>
           </Col>
         </Row>
@@ -110,10 +120,3 @@ export const EducationExpReadonly: React.FC = () => {
     </>
   )
 }
-
-const degreeOptions: SelectProps['options'] = [
-  { label: '博士', value: '博士' },
-  { label: '硕士', value: '硕士' },
-  { label: '本科', value: '本科' },
-  { label: '大专', value: '大专' }
-]
