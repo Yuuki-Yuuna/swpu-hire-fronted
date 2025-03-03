@@ -1,6 +1,6 @@
 import { interviewApi } from '@/api/interview'
 import { useRequest } from 'ahooks'
-import { Space, Table, Tag } from 'antd'
+import { Table, Tag } from 'antd'
 import type { TableProps } from 'antd'
 
 enum ApplyStatus {

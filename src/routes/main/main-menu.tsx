@@ -12,7 +12,7 @@ const menuItems: MenuProps['items'] = [
     children: [
       { key: 'job-info', label: '招聘信息' },
       { key: 'job-interview', label: '面试管理' },
-      { key: 'job-cv', label: '简历管理' }
+      { key: 'job-resume', label: '简历管理' }
     ]
   },
   {
