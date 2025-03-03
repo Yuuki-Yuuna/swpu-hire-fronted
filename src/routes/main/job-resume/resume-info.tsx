@@ -1,5 +1,10 @@
 import { Col, Divider, Flex, Form, Input, Row, Space } from 'antd'
+import type { ResumeFormData } from './interface'
 import { useStyles } from './style'
+
+export interface ResumeInfoProps {
+  formData?: ResumeFormData
+}
 
 export const ResumeInfoEditable: React.FC = () => {
   const { styles } = useStyles()
@@ -41,7 +46,10 @@ export const ResumeInfoEditable: React.FC = () => {
   )
 }
 
-export const ResumeInfoReadonly: React.FC = () => {
+export const ResumeInfoReadonly: React.FC<ResumeInfoProps> = (props) => {
+  const { formData } = props
+  const { name, phone, email, identify } = formData ?? {}
+
   const { styles } = useStyles()
 
   return (
@@ -52,13 +60,13 @@ export const ResumeInfoReadonly: React.FC = () => {
           <Col span={8}>
             <Space direction="vertical">
               <div className={styles.itemTitle}>姓名</div>
-              <div>张三</div>
+              <div>{name}</div>
             </Space>
           </Col>
           <Col span={8}>
             <Space direction="vertical">
               <div className={styles.itemTitle}>手机号码</div>
-              <div>130xxxxxxxx</div>
+              <div>{phone}</div>
             </Space>
           </Col>
         </Row>
@@ -66,13 +74,13 @@ export const ResumeInfoReadonly: React.FC = () => {
           <Col span={8}>
             <Space direction="vertical">
               <div className={styles.itemTitle}>邮箱</div>
-              <div>1234256325@qq.com</div>
+              <div>{email}</div>
             </Space>
           </Col>
           <Col span={8}>
             <Space direction="vertical">
               <div className={styles.itemTitle}>身份证</div>
-              <div>510402200101010002</div>
+              <div>{identify}</div>
             </Space>
           </Col>
         </Row>

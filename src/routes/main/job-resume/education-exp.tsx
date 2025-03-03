@@ -1,7 +1,13 @@
 import { DeleteOutlined, PlusOutlined } from '@ant-design/icons'
 import { Button, Col, DatePicker, Divider, Flex, Form, Input, Row, Select, Space } from 'antd'
 import type { SelectProps } from 'antd'
+import dayjs from 'dayjs'
+import type { ResumeFormData } from './interface'
 import { useStyles } from './style'
+
+export interface EducationExpProps {
+  formData?: ResumeFormData
+}
 
 export const EducationExpEditable: React.FC = () => {
   const { styles } = useStyles()
@@ -71,42 +77,52 @@ export const EducationExpEditable: React.FC = () => {
   )
 }
 
-export const EducationExpReadonly: React.FC = () => {
+export const EducationExpReadonly: React.FC<EducationExpProps> = (props) => {
+  const { formData } = props
+  const { education = [] } = formData ?? {}
+
   const { styles } = useStyles()
+
+  if (!education.length) {
+    return <></>
+  }
 
   return (
     <>
       <div className={styles.title}>教育经历</div>
-      <Flex vertical gap={16} className={styles.block}>
-        <Row gutter={16}>
-          <Col span={8}>
-            <Space direction="vertical">
-              <div className={styles.itemTitle}>学校</div>
-              <div>西南石油大砖</div>
-            </Space>
-          </Col>
-          <Col span={8}>
-            <Space direction="vertical">
-              <div className={styles.itemTitle}>专业</div>
-              <div>软件工程</div>
-            </Space>
-          </Col>
-        </Row>
-        <Row gutter={16}>
-          <Col span={8}>
-            <Space direction="vertical">
-              <div className={styles.itemTitle}>起止时间</div>
-              <div>2021.09 ~ 2025.06</div>
-            </Space>
-          </Col>
-          <Col span={8}>
-            <Space direction="vertical">
-              <div className={styles.itemTitle}>学历</div>
-              <div>本科</div>
-            </Space>
-          </Col>
-        </Row>
-      </Flex>
+      {education.map((item, index) => (
+        // biome-ignore lint/suspicious/noArrayIndexKey: <explanation>
+        <Flex key={index} vertical gap={16} className={styles.block}>
+          <Row gutter={16}>
+            <Col span={8}>
+              <Space direction="vertical">
+                <div className={styles.itemTitle}>学校</div>
+                <div>{item.school}</div>
+              </Space>
+            </Col>
+            <Col span={8}>
+              <Space direction="vertical">
+                <div className={styles.itemTitle}>专业</div>
+                <div>{item.major}</div>
+              </Space>
+            </Col>
+          </Row>
+          <Row gutter={16}>
+            <Col span={8}>
+              <Space direction="vertical">
+                <div className={styles.itemTitle}>起止时间</div>
+                <div>{`${dayjs(item.timeRange[0]).format('YYYY.MM')} ~ ${dayjs(item.timeRange[1]).format('YYYY.MM')}`}</div>
+              </Space>
+            </Col>
+            <Col span={8}>
+              <Space direction="vertical">
+                <div className={styles.itemTitle}>学历</div>
+                <div>{item.degree}</div>
+              </Space>
+            </Col>
+          </Row>
+        </Flex>
+      ))}
     </>
   )
 }

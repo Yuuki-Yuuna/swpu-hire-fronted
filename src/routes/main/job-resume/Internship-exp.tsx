@@ -1,6 +1,12 @@
 import { DeleteOutlined, PlusOutlined } from '@ant-design/icons'
 import { Button, Col, DatePicker, Divider, Flex, Form, Input, Row, Space } from 'antd'
+import dayjs from 'dayjs'
+import type { ResumeFormData } from './interface'
 import { useStyles } from './style'
+
+export interface IntershipExpProps {
+  formData?: ResumeFormData
+}
 
 export const IntershipExpEditable: React.FC = () => {
   const { styles } = useStyles()
@@ -43,7 +49,7 @@ export const IntershipExpEditable: React.FC = () => {
                         <DatePicker.RangePicker picker="month" />
                       </Form.Item>
                       <Form.Item name={[field.name, 'desc']} label="描述">
-                        <Input.TextArea placeholder="请输入描述" />
+                        <Input.TextArea autoSize={{ minRows: 4 }} placeholder="请输入描述" />
                       </Form.Item>
                     </Flex>
                     <Flex vertical align="flex-end">
@@ -70,44 +76,54 @@ export const IntershipExpEditable: React.FC = () => {
   )
 }
 
-export const IntershipExpReadonly: React.FC = () => {
+export const IntershipExpReadonly: React.FC<IntershipExpProps> = (props) => {
+  const { formData } = props
+  const { intership = [] } = formData ?? {}
+
   const { styles } = useStyles()
+
+  if (!intership.length) {
+    return <></>
+  }
 
   return (
     <>
       <div className={styles.title}>实习经历</div>
-      <Flex vertical gap={16} className={styles.block}>
-        <Row gutter={16}>
-          <Col span={8}>
-            <Space direction="vertical">
-              <div className={styles.itemTitle}>公司</div>
-              <div>字节跳不动</div>
-            </Space>
-          </Col>
-          <Col span={8}>
-            <Space direction="vertical">
-              <div className={styles.itemTitle}>起止时间</div>
-              <div>2021.09 ~ 2025.06</div>
-            </Space>
-          </Col>
-        </Row>
-        <Row>
-          <Col span={16}>
-            <Space direction="vertical">
-              <div className={styles.itemTitle}>职位</div>
-              <div>前端开发</div>
-            </Space>
-          </Col>
-        </Row>
-        <Row>
-          <Col span={16}>
-            <Space direction="vertical">
-              <div className={styles.itemTitle}>描述</div>
-              <div>爱国哈大概爱德华感觉</div>
-            </Space>
-          </Col>
-        </Row>
-      </Flex>
+      {intership.map((item, index) => (
+        // biome-ignore lint/suspicious/noArrayIndexKey: <explanation>
+        <Flex key={index} vertical gap={16} className={styles.block}>
+          <Row gutter={16}>
+            <Col span={8}>
+              <Space direction="vertical">
+                <div className={styles.itemTitle}>公司</div>
+                <div>{item.company}</div>
+              </Space>
+            </Col>
+            <Col span={8}>
+              <Space direction="vertical">
+                <div className={styles.itemTitle}>起止时间</div>
+                <div>{`${dayjs(item.timeRange[0]).format('YYYY.MM')} ~ ${dayjs(item.timeRange[1]).format('YYYY.MM')}`}</div>
+              </Space>
+            </Col>
+          </Row>
+          <Row>
+            <Col span={16}>
+              <Space direction="vertical">
+                <div className={styles.itemTitle}>职位</div>
+                <div>{item.position}</div>
+              </Space>
+            </Col>
+          </Row>
+          <Row>
+            <Col span={16}>
+              <Space direction="vertical">
+                <div className={styles.itemTitle}>描述</div>
+                <div className={styles.textArea}>{item.desc}</div>
+              </Space>
+            </Col>
+          </Row>
+        </Flex>
+      ))}
     </>
   )
 }

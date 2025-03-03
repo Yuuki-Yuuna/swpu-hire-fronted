@@ -1,4 +1,8 @@
+import { resumeApi } from '@/api/resume'
+import { useRequest } from 'ahooks'
 import { Button, Col, Flex, Form, Row, message } from 'antd'
+import dayjs from 'dayjs'
+import { cloneDeep } from 'lodash-es'
 import { useState } from 'react'
 import { IntershipExpEditable, IntershipExpReadonly } from './Internship-exp'
 import { EducationExpEditable, EducationExpReadonly } from './education-exp'
@@ -10,12 +14,16 @@ import { useStyles } from './style'
 
 const JobResume = () => {
   const [editable, setEditable] = useState(false)
-  const [formData, setFormData] = useState<ResumeFormData>()
+
+  const { data: formData, refresh } = useRequest(async () => {
+    const res = await resumeApi.info()
+    return transformRangeTime(res.data, 'dayjs')
+  })
 
   return editable ? (
-    <JobResumeEditable formData={formData} setFormData={setFormData} setEditable={setEditable} />
+    <JobResumeEditable formData={formData} refresh={refresh} setEditable={setEditable} />
   ) : (
-    <JobResumeReadonly formData={formData} setFormData={setFormData} setEditable={setEditable} />
+    <JobResumeReadonly formData={formData} refresh={refresh} setEditable={setEditable} />
   )
 }
 
@@ -23,20 +31,23 @@ export default JobResume
 
 interface JobResumeProps {
   formData?: ResumeFormData
-  setFormData: React.Dispatch<React.SetStateAction<ResumeFormData | undefined>>
+  refresh: () => void
   setEditable: React.Dispatch<React.SetStateAction<boolean>>
 }
 const JobResumeEditable: React.FC<JobResumeProps> = (props) => {
-  const { formData, setFormData, setEditable } = props
+  const { formData, refresh, setEditable } = props
 
   const { styles } = useStyles()
 
-  const onFinish = (formValue: ResumeFormData) => {
-    /** */
-    console.log(formValue)
-    setFormData(formValue)
-    setEditable(false)
-    message.success('更新成功')
+  const onFinish = async (formValue: ResumeFormData) => {
+    const res = await resumeApi.edit(transformRangeTime(formValue, 'timestamp'))
+    if (!res.success) {
+      message.error(res.message)
+    } else {
+      refresh()
+      message.success('更新成功')
+      setEditable(false)
+    }
   }
 
   return (
@@ -69,7 +80,7 @@ const JobResumeEditable: React.FC<JobResumeProps> = (props) => {
 }
 
 const JobResumeReadonly: React.FC<JobResumeProps> = (props) => {
-  const { setEditable } = props
+  const { formData, setEditable } = props
 
   const { styles } = useStyles()
 
@@ -79,11 +90,29 @@ const JobResumeReadonly: React.FC<JobResumeProps> = (props) => {
         <div style={{ fontSize: 20, fontWeight: 700 }}>我的简历</div>
         <Button onClick={() => setEditable(true)}>编辑简历</Button>
       </Flex>
-      <ResumeInfoReadonly />
-      <EducationExpReadonly />
-      <IntershipExpReadonly />
-      <ProjectExpReadonly />
-      <SelfEvaluationReadonly />
+      <ResumeInfoReadonly formData={formData} />
+      <EducationExpReadonly formData={formData} />
+      <IntershipExpReadonly formData={formData} />
+      <ProjectExpReadonly formData={formData} />
+      <SelfEvaluationReadonly formData={formData} />
     </Flex>
   )
+}
+
+// dayjs和timestamp互转
+const transformRangeTime = (formData: ResumeFormData, type: 'timestamp' | 'dayjs') => {
+  const formValue = cloneDeep(formData)
+  for (const key of Object.keys(formValue)) {
+    const formItemValue = formValue[key as keyof ResumeFormData]
+    if (Array.isArray(formItemValue)) {
+      for (const item of formItemValue) {
+        const [startTime, endTime] = item.timeRange
+        const tansfTimestamp = type === 'timestamp'
+        item.timeRange[0] = tansfTimestamp ? startTime.valueOf() : dayjs(startTime)
+        item.timeRange[1] = tansfTimestamp ? endTime.valueOf() : dayjs(endTime)
+      }
+    }
+  }
+
+  return formValue
 }

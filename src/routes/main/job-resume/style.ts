@@ -31,5 +31,8 @@ export const useStyles = createStyles(({ token, css }) => ({
   `,
   block: css`
     margin-bottom: 12px;
+  `,
+  textArea: css`
+    white-space: pre-line;
   `
 }))
