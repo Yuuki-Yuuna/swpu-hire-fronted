@@ -1,5 +1,5 @@
 import swpuIcon from '@/assets/swpu-icon.jpg'
-import type { UserInfo } from '@/hooks/use-user-info'
+import { type UserInfo, transformUserRenderData } from '@/hooks/use-user-info'
 import { getToken } from '@/utils/token'
 import type { GetProp, UploadProps } from 'antd'
 import { Avatar, Space, Upload, message } from 'antd'
@@ -15,6 +15,7 @@ export interface UserInfoCardProps {
 export const UserInfoCard: React.FC<UserInfoCardProps> = (props) => {
   const { userInfo, refreshUserInfo } = props
   const [loading, setLoading] = useState(false)
+  const { displayName, descText } = transformUserRenderData(userInfo)
   const avatarUrl = userInfo?.avatar || swpuIcon
 
   const beforeUpload = (file: FileType) => {
@@ -62,8 +63,8 @@ export const UserInfoCard: React.FC<UserInfoCardProps> = (props) => {
         <Avatar src={avatarUrl} size={100} />
       </Upload>
       <Space direction="vertical" size={6}>
-        <div style={{ fontSize: 18, fontWeight: 700 }}>{userInfo?.studentName}</div>
-        <div>{userInfo?.graduationYear}届</div>
+        <div style={{ fontSize: 18, fontWeight: 700 }}>{displayName}</div>
+        <div>{descText}</div>
       </Space>
     </Space>
   )

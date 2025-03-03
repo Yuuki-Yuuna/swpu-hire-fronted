@@ -6,12 +6,36 @@ import { useAtom } from 'jotai'
 import { atomWithReset, useResetAtom } from 'jotai/utils'
 import { useCallback, useEffect } from 'react'
 
-export interface UserInfo {
+export enum UserType {
+  Student = 0, // 学生
+  Company = 1, // 企业
+  School = 2 // 学校
+}
+
+interface BaseUserInfo {
   username: string
-  studentName: string
-  graduationYear: number
   avatar?: string
 }
+
+interface StudentUserInfo extends BaseUserInfo {
+  userType: UserType.Student
+  studentName: string
+  graduationYear: number
+}
+
+interface CompanyUserInfo extends BaseUserInfo {
+  userType: UserType.Company
+  campanyName: string
+  staffName: string
+}
+
+interface SchoolUserInfo extends BaseUserInfo {
+  userType: UserType.School
+  schoolName: string
+  adminName: string
+}
+
+export type UserInfo = StudentUserInfo | CompanyUserInfo | SchoolUserInfo
 
 const userAtom = atomWithReset<UserInfo | null>(null)
 
@@ -60,4 +84,20 @@ export const useUserInfo = () => {
 
 export const useResetUserInfo = () => {
   return useResetAtom(userAtom)
+}
+
+export const transformUserRenderData = (userInfo: UserInfo | null) => {
+  const data = { displayName: '', descText: '' }
+  if (userInfo?.userType === UserType.Student) {
+    data.displayName = userInfo.studentName
+    data.descText = `${userInfo.graduationYear}届`
+  } else if (userInfo?.userType === UserType.Company) {
+    data.displayName = userInfo.staffName
+    data.descText = userInfo.campanyName
+  } else if (userInfo?.userType === UserType.School) {
+    data.displayName = userInfo.adminName
+    data.descText = userInfo.schoolName
+  }
+
+  return data
 }

@@ -1,6 +1,6 @@
 import { resumeApi } from '@/api/resume'
 import { useRequest } from 'ahooks'
-import { Button, Col, Flex, Form, Row, message } from 'antd'
+import { Button, Col, Flex, Form, Row, Spin, message } from 'antd'
 import dayjs from 'dayjs'
 import { cloneDeep } from 'lodash-es'
 import { useState } from 'react'
@@ -15,15 +15,23 @@ import { useStyles } from './style'
 const JobResume = () => {
   const [editable, setEditable] = useState(false)
 
-  const { data: formData, refresh } = useRequest(async () => {
+  const {
+    data: formData,
+    loading,
+    refresh
+  } = useRequest(async () => {
     const res = await resumeApi.info()
     return transformRangeTime(res.data, 'dayjs')
   })
 
-  return editable ? (
-    <JobResumeEditable formData={formData} refresh={refresh} setEditable={setEditable} />
-  ) : (
-    <JobResumeReadonly formData={formData} refresh={refresh} setEditable={setEditable} />
+  return (
+    <Spin spinning={loading}>
+      {editable ? (
+        <JobResumeEditable formData={formData} refresh={refresh} setEditable={setEditable} />
+      ) : (
+        <JobResumeReadonly formData={formData} refresh={refresh} setEditable={setEditable} />
+      )}
+    </Spin>
   )
 }
 

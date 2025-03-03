@@ -77,12 +77,7 @@ export const JobCard: React.FC<JobCardProps> = (props) => {
             ))}
           </Space>
         </Flex>
-        <div
-          // biome-ignore lint/security/noDangerouslySetInnerHtml: <explanation>
-          dangerouslySetInnerHTML={{
-            __html: data?.description?.replaceAll('\\n', '<br/>') as string
-          }}
-        />
+        <div style={{ whiteSpace: 'pre-line' }}>{data?.description}</div>
       </Flex>
     </Flex>
   )
