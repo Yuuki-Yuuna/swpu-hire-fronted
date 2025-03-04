@@ -1,4 +1,4 @@
-import type { InterviewInfo } from '@/routes/main/job-interview/interview-table'
+import type { InterviewInfo } from '@/routes/student/job-interview/interview-table'
 import { request } from './request'
 
 export const interviewApi = {

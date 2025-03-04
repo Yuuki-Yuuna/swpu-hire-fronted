@@ -1,6 +1,8 @@
 import { userApi } from '@/api/user'
 import swpuIcon from '@/assets/swpu-icon.jpg'
-import { transformUserRenderData, useResetUserInfo, useUserInfo } from '@/hooks/use-user-info'
+import type { UserInfo } from '@/hooks/use-user-info'
+import { UserType } from '@/hooks/use-user-info'
+import { useResetUserInfo, useUserInfo } from '@/hooks/use-user-info'
 import { removeToken } from '@/utils/token'
 import { useNavigate } from '@modern-js/runtime/router'
 import { Avatar, Button, Image, Layout, Space, theme } from 'antd'
@@ -11,7 +13,6 @@ export const MainHeader: React.FC = () => {
   const navigate = useNavigate()
   const { userInfo } = useUserInfo()
   const resetUserInfo = useResetUserInfo()
-  const { displayName } = transformUserRenderData(userInfo)
 
   const {
     token: { colorBgContainer, colorFill }
@@ -46,7 +47,7 @@ export const MainHeader: React.FC = () => {
       <Space split={<div style={{ color: colorFill }}>|</div>}>
         <Space size={4} style={{ cursor: 'default' }}>
           <Avatar size={40} src={userInfo?.avatar || swpuIcon} />
-          <div style={{ fontSize: 16 }}>{displayName}</div>
+          <div style={{ fontSize: 16 }}>{getUserDisplayName(userInfo)}</div>
         </Space>
         <Button color="default" variant="link" size="small">
           个人中心
@@ -60,4 +61,15 @@ export const MainHeader: React.FC = () => {
       </Space>
     </Header>
   )
+}
+
+const getUserDisplayName = (userInfo: UserInfo | null) => {
+  switch (userInfo?.userType) {
+    case UserType.Student:
+      return userInfo.studentName
+    case UserType.Company:
+      return userInfo.staffName
+    case UserType.School:
+      return userInfo.adminName
+  }
 }

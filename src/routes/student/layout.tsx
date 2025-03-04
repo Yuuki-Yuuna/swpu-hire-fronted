@@ -1,12 +1,12 @@
 import headerBg from '@/assets/header-bg.png'
+import { MainHeader } from '@/components/main-header'
+import { MainMenu } from '@/components/main-menu'
 import { Outlet } from '@modern-js/runtime/router'
 import { Flex, Image, Layout, theme } from 'antd'
-import { MainHeader } from './main-header'
-import { MainMenu } from './main-menu'
 
 const { Content, Footer } = Layout
 
-const MainLayout = () => {
+const StudentLayout = () => {
   const {
     token: { colorBgContainer }
   } = theme.useToken()
@@ -32,4 +32,4 @@ const MainLayout = () => {
   )
 }
 
-export default MainLayout
+export default StudentLayout

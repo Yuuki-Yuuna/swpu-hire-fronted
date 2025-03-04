@@ -1,4 +1,4 @@
-import type { ResumeFormData } from '@/routes/main/job-resume/interface'
+import type { ResumeFormData } from '@/routes/student/job-resume/interface'
 import { request } from './request'
 
 export const resumeApi = {

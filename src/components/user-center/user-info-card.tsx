@@ -1,5 +1,5 @@
 import swpuIcon from '@/assets/swpu-icon.jpg'
-import { type UserInfo, transformUserRenderData } from '@/hooks/use-user-info'
+import { type UserInfo, UserType } from '@/hooks/use-user-info'
 import { getToken } from '@/utils/token'
 import type { GetProp, UploadProps } from 'antd'
 import { Avatar, Space, Upload, message } from 'antd'
@@ -15,8 +15,7 @@ export interface UserInfoCardProps {
 export const UserInfoCard: React.FC<UserInfoCardProps> = (props) => {
   const { userInfo, refreshUserInfo } = props
   const [loading, setLoading] = useState(false)
-  const { displayName, descText } = transformUserRenderData(userInfo)
-  const avatarUrl = userInfo?.avatar || swpuIcon
+  const { avatarUrl, displayName, descText } = getUserRenderData(userInfo)
 
   const beforeUpload = (file: FileType) => {
     if (loading) {
@@ -68,4 +67,20 @@ export const UserInfoCard: React.FC<UserInfoCardProps> = (props) => {
       </Space>
     </Space>
   )
+}
+
+export const getUserRenderData = (userInfo: UserInfo | null) => {
+  const data = { displayName: '', descText: '', avatarUrl: userInfo?.avatar || swpuIcon }
+  if (userInfo?.userType === UserType.Student) {
+    data.displayName = userInfo.studentName
+    data.descText = `${userInfo.graduationYear}届`
+  } else if (userInfo?.userType === UserType.Company) {
+    data.displayName = userInfo.staffName
+    data.descText = userInfo.campanyName
+  } else if (userInfo?.userType === UserType.School) {
+    data.displayName = userInfo.adminName
+    data.descText = userInfo.schoolName
+  }
+
+  return data
 }

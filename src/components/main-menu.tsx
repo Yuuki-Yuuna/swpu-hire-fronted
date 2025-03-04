@@ -16,7 +16,7 @@ export const MainMenu = () => {
     token: { colorBgContainer }
   } = theme.useToken()
 
-  const { menuItems, defaultOpenKeys } = getMenuItems(userInfo)
+  const { path, menuItems, defaultOpenKeys } = getMenuItems(userInfo)
 
   const [selectMenuKeys, setSelectMenuKeys] = useState<string[]>([])
 
@@ -28,7 +28,7 @@ export const MainMenu = () => {
 
   const onSelect: MenuProps['onSelect'] = (selectInfo) => {
     const [selectedKey] = selectInfo.selectedKeys
-    navigate(`/main/${selectedKey}`)
+    navigate(`${path}/${selectedKey}`)
   }
 
   return (
@@ -102,13 +102,16 @@ const schoolMenuItems: MenuItemArray = [
 ]
 
 const getMenuItems = (userInfo: UserInfo | null) => {
-  const data = { menuItems: [] as MenuItemArray, defaultOpenKeys: [] as string[] }
+  const data = { menuItems: [] as MenuItemArray, defaultOpenKeys: [] as string[], path: '' }
   if (userInfo?.userType === UserType.Student) {
     data.menuItems = studentMenuItems
+    data.path = '/student'
   } else if (userInfo?.userType === UserType.Company) {
     data.menuItems = companyMenuItems
+    data.path = '/company'
   } else if (userInfo?.userType === UserType.School) {
     data.menuItems = schoolMenuItems
+    data.path = '/school'
   }
 
   data.defaultOpenKeys = data.menuItems.map((item) => item?.key as string)

@@ -85,19 +85,3 @@ export const useUserInfo = () => {
 export const useResetUserInfo = () => {
   return useResetAtom(userAtom)
 }
-
-export const transformUserRenderData = (userInfo: UserInfo | null) => {
-  const data = { displayName: '', descText: '' }
-  if (userInfo?.userType === UserType.Student) {
-    data.displayName = userInfo.studentName
-    data.descText = `${userInfo.graduationYear}届`
-  } else if (userInfo?.userType === UserType.Company) {
-    data.displayName = userInfo.staffName
-    data.descText = userInfo.campanyName
-  } else if (userInfo?.userType === UserType.School) {
-    data.displayName = userInfo.adminName
-    data.descText = userInfo.schoolName
-  }
-
-  return data
-}

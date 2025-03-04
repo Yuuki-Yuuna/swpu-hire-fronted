@@ -39,7 +39,7 @@ export const LoginForm = () => {
     message.success('登录成功')
     const { token } = res.data
     setToken(token)
-    navigate('/main')
+    navigate('/')
   }
 
   return (
@@ -89,7 +89,6 @@ const useStyles = createStyles(({ token, css }) => ({
   title: css`
     margin: 16px 0;
     font-size: 18px;
-    line-height: 1.5;
     font-weight: 700;
   `
 }))

@@ -1,4 +1,4 @@
-import type { JobDetailData } from '@/routes/main/interface'
+import type { JobDetailData } from '@/routes/student/interface'
 import { Avatar, Flex, Space, theme } from 'antd'
 import { createStyles } from 'antd-style'
 

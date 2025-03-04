@@ -1,6 +1,6 @@
 import { jobApi } from '@/api/job'
 import swpuIcon from '@/assets/swpu-icon.jpg'
-import type { JobDetailData } from '@/routes/main/interface'
+import type { JobDetailData } from '@/routes/student/interface'
 import { Avatar, Button, Divider, Flex, Space, Tag, message, theme } from 'antd'
 import { createStyles } from 'antd-style'
 import { useState } from 'react'

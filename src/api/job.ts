@@ -1,5 +1,5 @@
-import type { JobData, JobDetailData } from '@/routes/main/interface'
-import type { JobSearchData } from '@/routes/main/job-info/job-search'
+import type { JobData, JobDetailData } from '@/routes/student/interface'
+import type { JobSearchData } from '@/routes/student/job-info/job-search'
 import { request } from './request'
 
 export const jobApi = {

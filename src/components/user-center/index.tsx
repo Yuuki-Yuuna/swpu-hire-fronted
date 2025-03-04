@@ -4,7 +4,7 @@ import { createStyles } from 'antd-style'
 import { UserInfoCard } from './user-info-card'
 import { UserOptionCard } from './user-option-card'
 
-const UserCenter = () => {
+export const UserCenter = () => {
   const { styles } = useStyles()
 
   const { userInfo, refresh } = useUserInfo()
@@ -23,8 +23,6 @@ const UserCenter = () => {
   )
 }
 
-export default UserCenter
-
 const useStyles = createStyles(({ token, css }) => ({
   container: css`
     padding: 24px;
@@ -35,6 +33,5 @@ const useStyles = createStyles(({ token, css }) => ({
     padding: 24px;
     border-radius: ${token.borderRadiusLG}px;
     font-size: 14px;
-    line-height: 1.5;
   `
 }))

@@ -1,4 +1,4 @@
-import type { JobData } from '@/routes/main/interface'
+import type { JobData } from '@/routes/student/interface'
 import { useNavigate } from '@modern-js/runtime/router'
 import { Avatar, Flex, Pagination, Space, Tag, theme } from 'antd'
 import { createStyles } from 'antd-style'
@@ -40,7 +40,7 @@ const JobListItem: React.FC<JobListItemProps> = (props) => {
   const { styles } = useStyles()
 
   const toJobDetail = () => {
-    navigate(`/main/job-detail/${_id}`)
+    navigate(`/student/job-detail/${_id}`)
   }
 
   return (
