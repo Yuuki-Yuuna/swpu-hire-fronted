@@ -37,7 +37,7 @@ interface SchoolUserInfo extends BaseUserInfo {
 
 export type UserInfo = StudentUserInfo | CompanyUserInfo | SchoolUserInfo
 
-const userAtom = atomWithReset<UserInfo | null>(null)
+export const userAtom = atomWithReset<UserInfo | null>(null)
 
 const getUserInfo = async (): Promise<{
   userInfo: UserInfo | null

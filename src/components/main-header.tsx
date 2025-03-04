@@ -18,8 +18,8 @@ export const MainHeader: React.FC = () => {
     token: { colorBgContainer, colorFill }
   } = theme.useToken()
 
-  const quit = () => {
-    userApi.quit()
+  const quit = async () => {
+    await userApi.quit()
     navigate('/login')
     resetUserInfo()
     removeToken()

@@ -47,7 +47,7 @@ export const SelfEvaluationReadonly: React.FC<SelfEvaluationProps> = (props) => 
           <Col span={16}>
             <Space direction="vertical">
               <div className={styles.itemTitle}>描述</div>
-              <div>{selfEvaluation}</div>
+              <div className={styles.textArea}>{selfEvaluation}</div>
             </Space>
           </Col>
         </Row>

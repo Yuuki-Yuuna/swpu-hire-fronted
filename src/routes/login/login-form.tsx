@@ -1,4 +1,5 @@
 import { userApi } from '@/api/user'
+import { userAtom } from '@/hooks/use-user-info'
 import { cryptoKey } from '@/utils/sercet-key'
 import { setToken } from '@/utils/token'
 import { LockOutlined, UserOutlined } from '@ant-design/icons'
@@ -6,6 +7,7 @@ import { useNavigate } from '@modern-js/runtime/router'
 import { Button, Checkbox, Flex, Form, Input, message } from 'antd'
 import { createStyles } from 'antd-style'
 import { AES } from 'crypto-js'
+import { useAtom } from 'jotai'
 
 interface LoginFormValue {
   username: string
@@ -17,6 +19,7 @@ const REMEMBER_USERNAME_KEY = 'remember_username'
 
 export const LoginForm = () => {
   const navigate = useNavigate()
+  const [, setUserInfo] = useAtom(userAtom)
 
   const { styles } = useStyles()
 
@@ -39,6 +42,8 @@ export const LoginForm = () => {
     message.success('登录成功')
     const { token } = res.data
     setToken(token)
+    const { data: userInfo } = await userApi.userInfo()
+    setUserInfo(userInfo)
     navigate('/')
   }
 

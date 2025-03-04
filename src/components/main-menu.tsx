@@ -81,7 +81,27 @@ const studentMenuItems: MenuItemArray = [
   }
 ]
 
-const companyMenuItems: MenuItemArray = []
+const companyMenuItems: MenuItemArray = [
+  {
+    key: 'hire',
+    label: '招聘事务',
+    children: [
+      { key: 'hire-job', label: '岗位管理' },
+      { key: 'hire-publish', label: '岗位发布' },
+      { key: 'hire-interview', label: '面试管理' }
+    ]
+  },
+  {
+    key: 'company',
+    label: '企业事务',
+    children: [{ key: 'company-qualificate', label: '企业信息' }]
+  },
+  {
+    key: 'user',
+    label: '系统设置',
+    children: [{ key: 'user-center', label: '个人中心' }]
+  }
+]
 
 const schoolMenuItems: MenuItemArray = [
   {
