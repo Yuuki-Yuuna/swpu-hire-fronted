@@ -75,8 +75,9 @@ export const getUserRenderData = (userInfo: UserInfo | null) => {
     data.displayName = userInfo.studentName
     data.descText = `${userInfo.graduationYear}届`
   } else if (userInfo?.userType === UserType.Company) {
-    data.displayName = userInfo.staffName
-    data.descText = userInfo.campanyName
+    const { companyName, companySizeName, companyNatureName } = userInfo.company
+    data.displayName = companyName
+    data.descText = `${companySizeName} | ${companyNatureName}`
   } else if (userInfo?.userType === UserType.School) {
     data.displayName = userInfo.adminName
     data.descText = userInfo.schoolName

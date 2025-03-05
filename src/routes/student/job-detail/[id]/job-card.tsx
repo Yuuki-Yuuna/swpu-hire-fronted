@@ -11,8 +11,7 @@ export interface JobCardProps {
 
 export const JobCard: React.FC<JobCardProps> = (props) => {
   const { data } = props
-  const { _id, jobName, salaryDesc, positionName, locationName, degreeName, showSkills, isApply } =
-    data ?? {}
+  const { _id, jobName, salaryDesc, locationName, degreeName, showSkills, isApply } = data ?? {}
 
   const { styles } = useStyles()
 
@@ -47,7 +46,7 @@ export const JobCard: React.FC<JobCardProps> = (props) => {
               <div style={{ fontSize: 16, color: colorError }}>{salaryDesc}</div>
             </Space>
             <Space split={<div style={{ color: colorFill }}>|</div>}>
-              <div className={styles.infoText}>{positionName ?? jobName}</div>
+              <div className={styles.infoText}>{jobName}</div>
               <div className={styles.infoText}>{locationName}</div>
               <div className={styles.infoText}>{degreeName}</div>
             </Space>

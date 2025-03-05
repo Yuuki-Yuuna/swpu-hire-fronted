@@ -68,7 +68,7 @@ const getUserDisplayName = (userInfo: UserInfo | null) => {
     case UserType.Student:
       return userInfo.studentName
     case UserType.Company:
-      return userInfo.staffName
+      return userInfo.company.companyName
     case UserType.School:
       return userInfo.adminName
   }

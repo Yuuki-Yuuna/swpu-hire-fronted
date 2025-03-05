@@ -1,4 +1,5 @@
 import { userApi } from '@/api/user'
+import type { CompanyData } from '@/routes/interface'
 import { getToken, removeToken } from '@/utils/token'
 import { useNavigate } from '@modern-js/runtime/router'
 import { message } from 'antd'
@@ -25,8 +26,7 @@ interface StudentUserInfo extends BaseUserInfo {
 
 interface CompanyUserInfo extends BaseUserInfo {
   userType: UserType.Company
-  campanyName: string
-  staffName: string
+  company: CompanyData
 }
 
 interface SchoolUserInfo extends BaseUserInfo {

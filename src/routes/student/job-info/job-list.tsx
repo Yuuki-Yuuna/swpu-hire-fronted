@@ -1,4 +1,4 @@
-import type { JobData } from '@/routes/student/interface'
+import type { JobData } from '@/routes/interface'
 import { useNavigate } from '@modern-js/runtime/router'
 import { Avatar, Flex, Pagination, Space, Tag, theme } from 'antd'
 import { createStyles } from 'antd-style'
@@ -63,7 +63,7 @@ const JobListItem: React.FC<JobListItemProps> = (props) => {
         <Space direction="vertical">
           <div style={{ fontSize: 16 }}>{company.companyName}</div>
           <Space split={<div style={{ color: colorFill }}>|</div>}>
-            <div className={styles.componayDesc}>{company.companyTypeName}</div>
+            <div className={styles.componayDesc}>{company.companyType}</div>
             <div className={styles.componayDesc}>{company.companySizeName}</div>
           </Space>
         </Space>

@@ -1,4 +1,5 @@
-import type { JobData, JobDetailData } from '@/routes/student/interface'
+import type { JobData } from '@/routes/interface'
+import type { JobDetailData } from '@/routes/student/interface'
 import type { JobSearchData } from '@/routes/student/job-info/job-search'
 import { request } from './request'
 

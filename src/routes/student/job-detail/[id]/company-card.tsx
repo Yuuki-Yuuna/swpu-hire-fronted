@@ -8,7 +8,7 @@ export interface CompanyCardProps {
 
 export const CompanyCard: React.FC<CompanyCardProps> = (props) => {
   const { data } = props
-  const { companyLogo, companyName, companyTypeName, companySizeName } = data ?? {}
+  const { companyLogo, companyName, companyType, companySizeName } = data ?? {}
 
   const { styles } = useStyles()
 
@@ -22,7 +22,7 @@ export const CompanyCard: React.FC<CompanyCardProps> = (props) => {
         <Avatar src={companyLogo} size={80} />
         <div style={{ fontSize: 16, fontWeight: 700 }}>{companyName}</div>
         <Space split={<div style={{ color: colorFill }}>|</div>}>
-          <div className={styles.infoText}>{companyTypeName}</div>
+          <div className={styles.infoText}>{companyType}</div>
           <div className={styles.infoText}>{companySizeName}</div>
         </Space>
       </Flex>

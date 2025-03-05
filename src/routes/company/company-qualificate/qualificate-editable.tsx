@@ -26,6 +26,7 @@ export const CompanyQualificateEditable: React.FC<CompanyQualificateProps> = (pr
       message.error(res.message)
     } else {
       message.success('提交审核成功')
+      setEditable(false)
     }
   }
 
