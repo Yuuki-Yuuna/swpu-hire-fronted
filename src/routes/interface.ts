@@ -1,11 +1,14 @@
 export interface JobData {
   _id: string
   jobName: string
-  location: number // 工作地(adcode编码)
+  location: string // 工作地(adcode编码)
   locationName: string // 工作地
   degreeName: string // 学历
   salaryDesc: string // 薪资描述
+  salaryMin: number // 最低薪资
+  salaryMax: number // 最高薪资
   showSkills: string[] // 标签
+  description?: string // 描述
   company: CompanyData
 }
 
