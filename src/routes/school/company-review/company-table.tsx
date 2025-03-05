@@ -105,7 +105,7 @@ const CompanyTableDetail: React.FC<CompanyTableDetailProps> = (props) => {
         centered
         maskClosable={false}
         open={isOpen}
-        loading={loading}
+        confirmLoading={loading}
         onOk={() => handleOk(true)}
         onCancel={() => setIsOpen(false)}
         okText="通过"
