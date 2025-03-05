@@ -8,7 +8,11 @@ import { CompanyQualificateReadonly } from './qualificate-readonly'
 const CompanyQualificate = () => {
   const [editable, setEditable] = useState(false)
 
-  const { data: formData, loading } = useRequest(async () => {
+  const {
+    data: formData,
+    loading,
+    refresh
+  } = useRequest(async () => {
     const examineRes = await companyApi.infoExamine()
     if (examineRes.data) {
       return { ...examineRes.data, isExamine: true }
@@ -20,7 +24,11 @@ const CompanyQualificate = () => {
   return (
     <Spin spinning={loading}>
       {editable ? (
-        <CompanyQualificateEditable formData={formData} setEditable={setEditable} />
+        <CompanyQualificateEditable
+          formData={formData}
+          setEditable={setEditable}
+          refresh={refresh}
+        />
       ) : (
         <CompanyQualificateReadonly formData={formData} setEditable={setEditable} />
       )}

@@ -4,8 +4,10 @@ import { Button, Col, Flex, Form, Input, Row, Select, message } from 'antd'
 import type { CompanyFormData, CompanyQualificateProps, QualificateFormData } from './interface'
 import { useStyles } from './style'
 
-export const CompanyQualificateEditable: React.FC<CompanyQualificateProps> = (props) => {
-  const { formData, setEditable } = props
+export const CompanyQualificateEditable: React.FC<
+  CompanyQualificateProps & { refresh: () => void }
+> = (props) => {
+  const { formData, setEditable, refresh } = props
 
   const { styles } = useStyles()
 
@@ -25,6 +27,7 @@ export const CompanyQualificateEditable: React.FC<CompanyQualificateProps> = (pr
     if (!res.success) {
       message.error(res.message)
     } else {
+      refresh()
       message.success('提交审核成功')
       setEditable(false)
     }
