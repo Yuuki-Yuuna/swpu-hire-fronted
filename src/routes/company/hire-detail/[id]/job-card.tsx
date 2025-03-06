@@ -96,12 +96,18 @@ const ApplyStatusButton: React.FC<{ interview?: InterviewInfo; refresh: () => vo
         centered
         destroyOnClose
         maskClosable={false}
+        width={640}
         title="流程处理"
         open={open}
         onCancel={() => setOpen(false)}
         okButtonProps={{ htmlType: 'submit' }}
         modalRender={(dom) => (
-          <Form name="interviewStatus" layout="vertical" onFinish={onFinish}>
+          <Form
+            name="interviewStatus"
+            layout="vertical"
+            onFinish={onFinish}
+            initialValues={interview}
+          >
             {dom}
           </Form>
         )}

@@ -1,7 +1,8 @@
 import { type ApplyStatus, applyStatusMap } from '@/routes/const'
 import { useNavigate } from '@modern-js/runtime/router'
-import { Button, Table, Tag } from 'antd'
+import { Button, Flex, Modal, Space, Table, Tag } from 'antd'
 import type { TableProps } from 'antd'
+import { useState } from 'react'
 
 export interface InterviewInfo {
   _id: string
@@ -10,6 +11,7 @@ export interface InterviewInfo {
   companyName: string
   applyTime: number
   status: ApplyStatus // 状态
+  description?: string
 }
 
 const columns: TableProps<InterviewInfo>['columns'] = [
@@ -65,15 +67,44 @@ export const InterviewTable: React.FC<InterviewTableProps> = (props) => {
 }
 
 const DetailButton: React.FC<InterviewInfo> = (props) => {
-  const { jobId } = props
+  const { jobId, status, description } = props
   const navigate = useNavigate()
+  const [open, setOpen] = useState(false)
+
   return (
-    <Button
-      type="link"
-      style={{ padding: 0 }}
-      onClick={() => navigate(`/student/job-detail/${jobId}`)}
-    >
-      详情
-    </Button>
+    <>
+      <Space size={16}>
+        <Button type="link" style={{ padding: 0 }} onClick={() => setOpen(true)}>
+          详情
+        </Button>
+        <Button
+          type="link"
+          style={{ padding: 0 }}
+          onClick={() => navigate(`/student/job-detail/${jobId}`)}
+        >
+          预览
+        </Button>
+      </Space>
+
+      <Modal
+        centered
+        destroyOnClose
+        title="面试状态"
+        open={open}
+        onCancel={() => setOpen(false)}
+        width={640}
+      >
+        <Flex vertical gap={16}>
+          <Space>
+            <div>面试状态：</div>
+            <Tag color={applyStatusMap[status].color}>{applyStatusMap[status].text}</Tag>
+          </Space>
+          <Space direction="vertical">
+            <div>额外信息：</div>
+            <div style={{ whiteSpace: 'pre-line' }}>{description}</div>
+          </Space>
+        </Flex>
+      </Modal>
+    </>
   )
 }

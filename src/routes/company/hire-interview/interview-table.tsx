@@ -12,6 +12,7 @@ export interface InterviewInfo {
   companyName: string
   applyTime: number
   status: ApplyStatus // 状态
+  description?: string
   student: StudentUserInfo
 }
 
