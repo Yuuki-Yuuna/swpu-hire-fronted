@@ -17,7 +17,7 @@ export const CompanyCard: React.FC<CompanyCardProps> = (props) => {
   } = theme.useToken()
 
   return (
-    <Flex vertical flex={1}>
+    <Flex vertical flex={1} style={{ minWidth: 190 }}>
       <Flex vertical align="center" className={styles.card} gap={12}>
         <Avatar src={companyLogo} size={80} />
         <div style={{ fontSize: 16, fontWeight: 700 }}>{companyName}</div>

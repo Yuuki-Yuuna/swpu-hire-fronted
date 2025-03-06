@@ -30,8 +30,8 @@ export const JobTable: React.FC<JobTableProps> = (props) => {
       },
       {
         title: '发布时间',
-        dataIndex: 'publishTime',
-        key: 'publishTime',
+        dataIndex: 'createdAt',
+        key: 'createdAt',
         render: (value) => dayjs(value).format('YYYY-MM-DD')
       },
       {

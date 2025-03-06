@@ -8,7 +8,7 @@ import { JobCard } from './job-card'
 const JobDetail = () => {
   const params = useParams()
 
-  const { data, loading } = useRequest(async () => {
+  const { data, loading, refresh } = useRequest(async () => {
     const res = await jobApi.detail({ id: params.id as string })
     return res.data
   })
@@ -16,7 +16,7 @@ const JobDetail = () => {
   return (
     <Spin spinning={loading}>
       <Flex gap={12}>
-        <JobCard data={data} />
+        <JobCard data={data} refresh={refresh} />
         <CompanyCard data={data?.company} />
       </Flex>
     </Spin>

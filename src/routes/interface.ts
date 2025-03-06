@@ -10,6 +10,7 @@ export interface JobData {
   showSkills: string[] // 标签
   description?: string // 描述
   company: CompanyData
+  createdAt: string // 创建时间
 }
 
 export interface CompanyData {

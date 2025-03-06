@@ -1,16 +1,16 @@
 import { jobApi } from '@/api/job'
-import swpuIcon from '@/assets/swpu-icon.jpg'
 import type { JobDetailData } from '@/routes/student/interface'
-import { Avatar, Button, Divider, Flex, Space, Tag, message, theme } from 'antd'
+import { Button, Flex, Space, Tag, message, theme } from 'antd'
 import { createStyles } from 'antd-style'
 import { useState } from 'react'
 
 export interface JobCardProps {
   data?: JobDetailData
+  refresh: () => void
 }
 
 export const JobCard: React.FC<JobCardProps> = (props) => {
-  const { data } = props
+  const { data, refresh } = props
   const { _id, jobName, salaryDesc, locationName, degreeName, showSkills, isApply } = data ?? {}
 
   const { styles } = useStyles()
@@ -31,6 +31,7 @@ export const JobCard: React.FC<JobCardProps> = (props) => {
     if (!res.success) {
       message.error(res.message)
     } else {
+      refresh()
       message.success('申请成功')
     }
     setApplyLoading(false)
@@ -57,14 +58,6 @@ export const JobCard: React.FC<JobCardProps> = (props) => {
               申请
             </Button>
           </Space>
-        </Flex>
-        <Divider />
-        <Flex gap="large">
-          <Avatar src={swpuIcon} size={60} />
-          <Flex vertical gap={8} justify="center">
-            <div>x先生</div>
-            <div>xxx科技有限公司</div>
-          </Flex>
         </Flex>
       </Flex>
       <Flex vertical className={styles.card}>

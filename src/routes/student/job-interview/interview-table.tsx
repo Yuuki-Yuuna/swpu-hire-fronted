@@ -1,6 +1,5 @@
-import { interviewApi } from '@/api/interview'
-import { useRequest } from 'ahooks'
-import { Table, Tag } from 'antd'
+import { useNavigate } from '@modern-js/runtime/router'
+import { Button, Table, Tag } from 'antd'
 import type { TableProps } from 'antd'
 
 enum ApplyStatus {
@@ -13,6 +12,7 @@ enum ApplyStatus {
 
 export interface InterviewInfo {
   _id: string
+  jobId: string
   jobName: string
   companyName: string
   applyTime: number
@@ -44,16 +44,21 @@ const columns: TableProps<InterviewInfo>['columns'] = [
       const { text, color } = applyStatusMap[status as ApplyStatus]
       return <Tag color={color}>{text}</Tag>
     }
+  },
+  {
+    title: '操作',
+    dataIndex: 'opreation',
+    render: (_, record) => <DetailButton {...record} />
   }
 ]
 
-export const InterviewTable: React.FC = () => {
-  const { data, loading } = useRequest(async () => {
-    const res = await interviewApi.info()
-    return res.data
-  })
+export interface InterviewTableProps {
+  data: InterviewInfo[]
+  loading: boolean
+}
 
-  const { list } = data ?? {}
+export const InterviewTable: React.FC<InterviewTableProps> = (props) => {
+  const { data, loading } = props
 
   return (
     <Table<InterviewInfo>
@@ -61,8 +66,22 @@ export const InterviewTable: React.FC = () => {
       rowKey="_id"
       loading={loading}
       columns={columns}
-      dataSource={list}
+      dataSource={data}
     />
+  )
+}
+
+const DetailButton: React.FC<InterviewInfo> = (props) => {
+  const { jobId } = props
+  const navigate = useNavigate()
+  return (
+    <Button
+      type="link"
+      style={{ padding: 0 }}
+      onClick={() => navigate(`/student/job-detail/${jobId}`)}
+    >
+      详情
+    </Button>
   )
 }
 
