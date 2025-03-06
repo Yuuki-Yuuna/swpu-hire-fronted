@@ -18,18 +18,18 @@ interface BaseUserInfo {
   avatar?: string
 }
 
-interface StudentUserInfo extends BaseUserInfo {
+export interface StudentUserInfo extends BaseUserInfo {
   userType: UserType.Student
   studentName: string
   graduationYear: number
 }
 
-interface CompanyUserInfo extends BaseUserInfo {
+export interface CompanyUserInfo extends BaseUserInfo {
   userType: UserType.Company
   company: CompanyData
 }
 
-interface SchoolUserInfo extends BaseUserInfo {
+export interface SchoolUserInfo extends BaseUserInfo {
   userType: UserType.School
   schoolName: string
   adminName: string

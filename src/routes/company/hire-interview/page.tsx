@@ -5,14 +5,14 @@ import { useMemo, useState } from 'react'
 import { InterviewFilter, type InterviewFilterData } from './interview-filter'
 import { InterviewTable } from './interview-table'
 
-const JobInterview = () => {
+const HireInterview = () => {
   const [filterData, setFilterData] = useState<InterviewFilterData>({
     jobName: '',
-    companyName: ''
+    studentName: ''
   })
 
   const { data, loading } = useRequest(async () => {
-    const res = await interviewApi.info()
+    const res = await interviewApi.listByCompany()
     return res.data
   })
 
@@ -20,7 +20,8 @@ const JobInterview = () => {
     () =>
       (data || []).filter(
         (item) =>
-          item.jobName.includes(filterData.jobName) && item.jobName.includes(filterData.companyName)
+          item.jobName.includes(filterData.jobName) &&
+          item.student.studentName.includes(filterData.studentName)
       ),
     [data, filterData]
   )
@@ -33,4 +34,4 @@ const JobInterview = () => {
   )
 }
 
-export default JobInterview
+export default HireInterview

@@ -1,3 +1,4 @@
+import type { StudentUserInfo } from '@/hooks/use-user-info'
 import { type ApplyStatus, applyStatusMap } from '@/routes/const'
 import { useNavigate } from '@modern-js/runtime/router'
 import { Button, Table, Tag } from 'antd'
@@ -5,11 +6,13 @@ import type { TableProps } from 'antd'
 
 export interface InterviewInfo {
   _id: string
+  userId: string
   jobId: string
   jobName: string
   companyName: string
   applyTime: number
   status: ApplyStatus // 状态
+  student: StudentUserInfo
 }
 
 const columns: TableProps<InterviewInfo>['columns'] = [
@@ -19,9 +22,10 @@ const columns: TableProps<InterviewInfo>['columns'] = [
     key: 'jobName'
   },
   {
-    title: '企业名',
-    dataIndex: 'companyName',
-    key: 'companyName'
+    title: '候选人',
+    dataIndex: 'student',
+    key: 'student',
+    render: (value: StudentUserInfo) => value.studentName
   },
   {
     title: '申请时间',
@@ -65,13 +69,13 @@ export const InterviewTable: React.FC<InterviewTableProps> = (props) => {
 }
 
 const DetailButton: React.FC<InterviewInfo> = (props) => {
-  const { jobId } = props
+  const { jobId, userId } = props
   const navigate = useNavigate()
   return (
     <Button
       type="link"
       style={{ padding: 0 }}
-      onClick={() => navigate(`/student/job-detail/${jobId}`)}
+      onClick={() => navigate(`/company/hire-detail/${jobId}?userId=${userId}`)}
     >
       详情
     </Button>

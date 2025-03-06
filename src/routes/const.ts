@@ -1,6 +1,22 @@
 import adcode from '@/assets/adcode.json'
 import type { CascaderProps, SelectProps } from 'antd'
 
+export enum ApplyStatus {
+  End = 0, // 流程结束
+  Apply = 1, // 已申请
+  Interview = 2, // 面试中
+  Evaluation = 3, // 录用评估
+  Hire = 4 // 通过
+}
+
+export const applyStatusMap = {
+  [ApplyStatus.End]: { text: '流程结束', color: 'grey' },
+  [ApplyStatus.Apply]: { text: '已投递', color: 'gold' },
+  [ApplyStatus.Interview]: { text: '面试中', color: 'blue' },
+  [ApplyStatus.Evaluation]: { text: '录用评估', color: 'cyan' },
+  [ApplyStatus.Hire]: { text: '已录用', color: 'green' }
+}
+
 export const cityOptions: NonNullable<CascaderProps['options']> = adcode.map((province) => ({
   label: province.name,
   value: province.adcode,
