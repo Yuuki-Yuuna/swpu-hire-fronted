@@ -7,6 +7,9 @@ export const jobApi = {
   list(params: { page: number; limit: number } & JobSearchData) {
     return request.get<{ list: JobData[]; total: number }>('/job/list', { params })
   },
+  lastestList(params: { page: number; limit: number } & JobSearchData) {
+    return request.get<{ list: JobData[]; total: number }>('/job/lastest-list', { params })
+  },
   recommend(params: { page: number; limit: number }) {
     return request.get<{ list: JobData[]; total: number }>('/job/recommend', { params })
   },

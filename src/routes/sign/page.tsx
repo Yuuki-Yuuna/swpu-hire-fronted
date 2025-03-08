@@ -1,11 +1,11 @@
 import loginBg from '@/assets/login-bg.png'
 import swpuBrand from '@/assets/swou-brand.png'
 import { Image, Layout, theme } from 'antd'
-import { LoginForm } from './login-form'
+import { SignForm } from './sign-form'
 
 const { Header } = Layout
 
-const Login = () => {
+const Sign = () => {
   const {
     token: { colorBgContainer }
   } = theme.useToken()
@@ -27,10 +27,10 @@ const Login = () => {
       </Header>
       <Layout style={{ position: 'relative' }}>
         <Image src={loginBg} preview={false} height={'100%'} />
-        <LoginForm />
+        <SignForm />
       </Layout>
     </Layout>
   )
 }
 
-export default Login
+export default Sign

@@ -69,7 +69,9 @@ export const LoginForm = () => {
           <Form.Item name="remember" valuePropName="checked" noStyle>
             <Checkbox>记住用户名</Checkbox>
           </Form.Item>
-          <Button type="link">忘记密码</Button>
+          <Button type="link" onClick={() => navigate('/sign')}>
+            注册
+          </Button>
         </Flex>
       </Form.Item>
       <Form.Item>
@@ -84,8 +86,8 @@ export const LoginForm = () => {
 const useStyles = createStyles(({ token, css }) => ({
   form: css`
     position: absolute;
-    top: 60px;
-    right: 60px;
+    top: 20%;
+    right: 15%;
     width: 400px;
     padding: 12px 28px;
     border-radius: ${token.borderRadiusLG}px;

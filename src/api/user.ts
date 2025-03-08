@@ -5,6 +5,9 @@ export const userApi = {
   login(params: { username: string; password: string }) {
     return request.post<{ token: string }>('/user/login', params)
   },
+  sign(params: { username: string; password: string }) {
+    return request.post<{ token: string }>('/user/sign', params)
+  },
   quit() {
     return request.post<null>('/user/quit')
   },

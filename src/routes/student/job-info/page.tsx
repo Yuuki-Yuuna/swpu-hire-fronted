@@ -43,12 +43,24 @@ const JobInfo = () => {
     { refreshDeps: [jobSearchData] }
   )
 
+  const {
+    loading: lastestLoading,
+    data: lastestData,
+    pagination: lastestPagination
+  } = usePagination(
+    async ({ current, pageSize }) => {
+      const result = await jobApi.lastestList({ ...jobSearchData, page: current, limit: pageSize })
+      return result.data
+    },
+    { refreshDeps: [jobSearchData] }
+  )
+
   const tabItems = useMemo<TabsProps['items']>(
     () => [
       {
         key: 'all',
         label: '全部',
-        children: jobListData ? <JobList data={jobListData} pagination={listPagination} /> : <></>
+        children: jobListData && <JobList data={jobListData} pagination={listPagination} />
       },
       {
         key: 'recommend',
@@ -56,16 +68,16 @@ const JobInfo = () => {
         children: <></>
       },
       {
-        key: 'last',
+        key: 'lastest',
         label: '最新',
-        children: <></>
+        children: lastestData && <JobList data={lastestData} pagination={lastestPagination} />
       }
     ],
-    [jobListData, listPagination]
+    [jobListData, listPagination, lastestData, lastestPagination]
   )
 
   return (
-    <Spin spinning={jobListLoading}>
+    <Spin spinning={jobListLoading || lastestLoading}>
       <Flex vertical>
         <JobSearch data={jobSearchData} onChange={onJobSearchDataChange} />
         <Tabs items={tabItems} defaultActiveKey="all" className={styles.tabs} size="small" />

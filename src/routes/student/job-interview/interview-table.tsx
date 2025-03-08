@@ -89,9 +89,11 @@ const DetailButton: React.FC<InterviewInfo> = (props) => {
       <Modal
         centered
         destroyOnClose
+        maskClosable={false}
         title="面试状态"
         open={open}
         onCancel={() => setOpen(false)}
+        onOk={() => setOpen(false)}
         width={640}
       >
         <Flex vertical gap={16}>
