@@ -1,6 +1,6 @@
 import { interviewApi } from '@/api/interview'
 import type { InterviewInfo } from '@/routes/company/hire-interview/interview-table'
-import { type ApplyStatus, applyStatusMap } from '@/routes/const'
+import { ApplyStatus, applyStatusMap } from '@/routes/const'
 import type { JobData } from '@/routes/interface'
 import { useNavigate } from '@modern-js/runtime/router'
 import { Badge, Button, Flex, Form, Input, Modal, Select, Space, Tag, message, theme } from 'antd'
@@ -89,7 +89,11 @@ const ApplyStatusButton: React.FC<{ interview?: InterviewInfo; refresh: () => vo
 
   return (
     <>
-      <Button type="primary" onClick={() => setOpen(true)}>
+      <Button
+        type="primary"
+        disabled={interview?.status === ApplyStatus.Sign}
+        onClick={() => setOpen(true)}
+      >
         处理
       </Button>
       <Modal
@@ -117,7 +121,11 @@ const ApplyStatusButton: React.FC<{ interview?: InterviewInfo; refresh: () => vo
           label="面试状态"
           rules={[{ required: true, message: '请输入新密码' }]}
         >
-          <Select placeholder="流转面试状态" options={statusOptions} style={{ width: 160 }} />
+          <Select
+            placeholder="流转面试状态"
+            options={statusOptions.slice(0, -1)}
+            style={{ width: 160 }}
+          />
         </Form.Item>
         <Form.Item name="description" label="附加信息">
           <Input.TextArea rows={4} />

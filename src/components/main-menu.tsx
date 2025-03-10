@@ -94,7 +94,10 @@ const companyMenuItems: MenuItemArray = [
   {
     key: 'company',
     label: '企业事务',
-    children: [{ key: 'company-qualificate', label: '企业信息' }]
+    children: [
+      { key: 'company-qualificate', label: '企业信息' },
+      { key: 'company-protocol', label: '三方协议' }
+    ]
   },
   {
     key: 'user',

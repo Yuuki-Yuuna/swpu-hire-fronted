@@ -23,7 +23,7 @@ const HireJob = () => {
   )
 
   return (
-    <Spin spinning={false}>
+    <Spin spinning={loading}>
       <Flex vertical gap={16}>
         <JobFilter onFilterChange={setJobName} />
         <JobTable data={dataSource} loading={loading} refresh={refresh} />

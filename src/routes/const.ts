@@ -6,7 +6,8 @@ export enum ApplyStatus {
   Apply = 1, // 已申请
   Interview = 2, // 面试中
   Evaluation = 3, // 录用评估
-  Hire = 4 // 通过
+  Hire = 4, // 通过
+  Sign = 5 // 签约
 }
 
 export const applyStatusMap = {
@@ -14,7 +15,24 @@ export const applyStatusMap = {
   [ApplyStatus.Apply]: { text: '已投递', color: 'gold' },
   [ApplyStatus.Interview]: { text: '面试中', color: 'blue' },
   [ApplyStatus.Evaluation]: { text: '录用评估', color: 'cyan' },
-  [ApplyStatus.Hire]: { text: '已录用', color: 'green' }
+  [ApplyStatus.Hire]: { text: '已录用', color: 'green' },
+  [ApplyStatus.Sign]: { text: '就业协议', color: 'purple' }
+}
+
+export enum SignStatus {
+  Wait = 0, // 等待发起
+  Start = 1, // 企业发起
+  Check = 2, // 学生受理
+  Review = 3, // 学校审核
+  Done = 4 // 审核通过
+}
+
+export const signStatusMap = {
+  [SignStatus.Wait]: { text: '等待发起', color: 'grey' },
+  [SignStatus.Start]: { text: '企业发起', color: 'gold' },
+  [SignStatus.Check]: { text: '学生受理', color: 'blue' },
+  [SignStatus.Review]: { text: '学校审核', color: 'cyan' },
+  [SignStatus.Done]: { text: '审核通过', color: 'green' }
 }
 
 export const cityOptions: NonNullable<CascaderProps['options']> = adcode.map((province) => ({

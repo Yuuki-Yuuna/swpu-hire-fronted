@@ -1,5 +1,14 @@
+import { useNavigate } from '@modern-js/runtime/router'
+import { useEffect } from 'react'
+
 const Company = () => {
-  return <>company main content</>
+  const navigate = useNavigate()
+
+  useEffect(() => {
+    navigate('/company/hire-job')
+  }, [navigate])
+
+  return <></>
 }
 
 export default Company
