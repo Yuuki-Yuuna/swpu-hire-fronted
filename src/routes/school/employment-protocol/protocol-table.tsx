@@ -10,6 +10,7 @@ export interface ProtocolTableData {
   _id: string
   userId: string
   companyId: string
+  studentName: string
   companyName: string
   status: number
   updatedAt: string
@@ -28,6 +29,10 @@ export const ProtocolTable: React.FC<ProtocolTableProps> = (props) => {
 
   const columns: TableProps<ProtocolTableData>['columns'] = useMemo(
     () => [
+      {
+        title: '签约学生',
+        dataIndex: 'studentName'
+      },
       {
         title: '签约单位',
         dataIndex: 'companyName'
@@ -90,7 +95,7 @@ const DetailButton: React.FC<ProtocolTableData & { refresh: () => void }> = (pro
         onOk={() => handleOk(true)}
         okText="同意"
         footer={(_, { OkBtn }) =>
-          status === SignStatus.Check && (
+          status === SignStatus.Review && (
             <>
               <Button color="danger" variant="solid" onClick={() => handleOk(false)}>
                 拒绝

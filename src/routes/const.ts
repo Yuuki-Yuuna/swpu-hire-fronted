@@ -24,7 +24,8 @@ export enum SignStatus {
   Start = 1, // 企业发起
   Check = 2, // 学生受理
   Review = 3, // 学校审核
-  Done = 4 // 审核通过
+  Done = 4, // 审核通过
+  Cancel = 5 // 协议取消
 }
 
 export const signStatusMap = {
@@ -32,7 +33,8 @@ export const signStatusMap = {
   [SignStatus.Start]: { text: '企业发起', color: 'gold' },
   [SignStatus.Check]: { text: '学生受理', color: 'blue' },
   [SignStatus.Review]: { text: '学校审核', color: 'cyan' },
-  [SignStatus.Done]: { text: '审核通过', color: 'green' }
+  [SignStatus.Done]: { text: '审核通过', color: 'green' },
+  [SignStatus.Cancel]: { text: '协议取消', color: 'red' }
 }
 
 export const cityOptions: NonNullable<CascaderProps['options']> = adcode.map((province) => ({

@@ -20,6 +20,7 @@ export interface ProtocolTableData {
   status: SignStatus
   filename: string
   file: string
+  updatedAt: string
 }
 
 type FileType = Parameters<GetProp<UploadProps, 'beforeUpload'>>[0]
@@ -170,7 +171,7 @@ const DetailButton: React.FC<ProtocolTableData> = (props) => {
             本协议供普通高等学校应届毕业生在与用人单位正式确立劳动人事关系前使用，由甲方（用人单位）和乙方（高校毕业生）在双向选择基础上共同签订，是用人单位确认毕业生信息真实可靠、接收毕业生的重要凭证，也是高校进行毕业生就业管理、编制就业方案及毕业生办理就业手续的重要依据。
           </div>
         </Space>
-        <Space>
+        <Space direction="vertical" size="large">
           <div>三方文件：</div>
           {file && (
             <a href={file}>
