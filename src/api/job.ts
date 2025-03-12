@@ -10,6 +10,9 @@ export const jobApi = {
   lastestList(params: { page: number; limit: number } & JobSearchData) {
     return request.get<{ list: JobData[]; total: number }>('/job/lastest-list', { params })
   },
+  collectList(params: { page: number; limit: number } & JobSearchData) {
+    return request.get<{ list: JobData[]; total: number }>('/job/collect-list', { params })
+  },
   recommend(params: { page: number; limit: number }) {
     return request.get<{ list: JobData[]; total: number }>('/job/recommend', { params })
   },
@@ -18,5 +21,8 @@ export const jobApi = {
   },
   apply(params: { jobId: string }) {
     return request.post<null>('/interview/create-record', params)
+  },
+  collect(params: { id: string }) {
+    return request.post<null>('/job/collect', params)
   }
 }

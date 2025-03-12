@@ -11,13 +11,30 @@ export interface JobCardProps {
 
 export const JobCard: React.FC<JobCardProps> = (props) => {
   const { data, refresh } = props
-  const { _id, jobName, salaryDesc, locationName, degreeName, showSkills, isApply } = data ?? {}
+  const { _id, jobName, salaryDesc, locationName, degreeName, showSkills, isApply, isCollect } =
+    data ?? {}
 
   const { styles } = useStyles()
 
   const {
     token: { colorError, colorFill }
   } = theme.useToken()
+
+  const [collectLoading, setCollectLoading] = useState(false)
+  const collectJob = async () => {
+    if (!_id) {
+      return
+    }
+    setCollectLoading(true)
+    const res = await jobApi.collect({ id: _id })
+    if (!res.success) {
+      message.error(res.message)
+    } else {
+      refresh()
+      message.success('收藏成功')
+    }
+    setCollectLoading(false)
+  }
 
   const [applyLoading, setApplyLoading] = useState(false)
 
@@ -53,7 +70,9 @@ export const JobCard: React.FC<JobCardProps> = (props) => {
             </Space>
           </Flex>
           <Space>
-            <Button>收藏</Button>
+            <Button disabled={isCollect} loading={collectLoading} onClick={collectJob}>
+              收藏
+            </Button>
             <Button type="primary" disabled={isApply} loading={applyLoading} onClick={applyJob}>
               申请
             </Button>
