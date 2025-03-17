@@ -4,7 +4,7 @@ import { usePagination } from 'ahooks'
 import { Spin, type TabsProps } from 'antd'
 import { Flex, Tabs } from 'antd'
 import { createStyles } from 'antd-style'
-import { useMemo, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import { JobList } from './job-list'
 import { JobSearch, type JobSearchData } from './job-search'
 
@@ -67,6 +67,18 @@ const JobInfo = () => {
     { refreshDeps: [jobSearchData] }
   )
 
+  const {
+    loading: recommendLoading,
+    data: recommendData,
+    pagination: recommendPagination
+  } = usePagination(
+    async ({ current, pageSize }) => {
+      const result = await jobApi.recommend({ ...jobSearchData, page: current, limit: pageSize })
+      return result.data
+    },
+    { refreshDeps: [jobSearchData] }
+  )
+
   const tabItems = useMemo<TabsProps['items']>(
     () => [
       {
@@ -77,7 +89,7 @@ const JobInfo = () => {
       {
         key: 'recommend',
         label: '推荐',
-        children: <></>
+        children: recommendData && <JobList data={recommendData} pagination={recommendPagination} />
       },
       {
         key: 'lastest',
@@ -90,11 +102,20 @@ const JobInfo = () => {
         children: collectData && <JobList data={collectData} pagination={collectPagination} />
       }
     ],
-    [jobListData, listPagination, lastestData, lastestPagination, collectData, collectPagination]
+    [
+      jobListData,
+      listPagination,
+      lastestData,
+      lastestPagination,
+      collectData,
+      collectPagination,
+      recommendData,
+      recommendPagination
+    ]
   )
 
   return (
-    <Spin spinning={jobListLoading || lastestLoading || collectLoading}>
+    <Spin spinning={jobListLoading || lastestLoading || collectLoading || recommendLoading}>
       <Flex vertical>
         <JobSearch data={jobSearchData} onChange={onJobSearchDataChange} />
         <Tabs items={tabItems} defaultActiveKey="all" className={styles.tabs} size="small" />
